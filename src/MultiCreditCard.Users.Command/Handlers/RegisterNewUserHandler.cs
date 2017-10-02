@@ -49,7 +49,7 @@ namespace MultiCreditCard.Users.Command.Handlers
             if (!results.IsValid)
                 results.Errors.ToList().ForEach(x => response.AddError(x.ErrorMessage));
 
-            var user = _userRepository.GetUserByEmail(command.Email);
+            var user = _userRepository.GetUserByEmail(command.Email).Result;
             if (user != null)
                 response.AddError($"Usuário ja criado para o email {command.Email}");
         }
@@ -58,7 +58,7 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             try
             {
-                _userRepository.Create(_user);
+                _userRepository.CreateAsync(_user).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

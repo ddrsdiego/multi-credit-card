@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MediatR;
+using MultiCreditCard.Infra.IoC;
 
 namespace MultiCreditCard.Api
 {
@@ -25,8 +26,8 @@ namespace MultiCreditCard.Api
         {
             services.AddMvc();
             services.AddMediatR(typeof(Startup));
-            //services.RegisterRepositories();
-            //services.RegisterHandler();
+            services.RegisterRepositories();
+            services.RegisterHandler();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

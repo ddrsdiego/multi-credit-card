@@ -4,4 +4,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Users.Infra.Data\MultiCreditCard.Users.Infra.Data.csproj" />
+  </ItemGroup>
+
 </Project>

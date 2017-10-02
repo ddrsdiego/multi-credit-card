@@ -17,6 +17,7 @@ namespace MultiCreditCard.Users.Domain.Entities
             CreationDate = DateTime.Now;
         }
 
+        //public Guid Id { get; private set; }
         public string UserName { get; private set; }
         public decimal DocumentNumber { get; private set; }
         public Email Email { get; private set; }
