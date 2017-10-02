@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.8
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CCC1795-2163-439A-80B9-01A98BFF43B7}"
 	ProjectSection(SolutionItems) = preProject
@@ -38,27 +38,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CreditCard", "CreditCard", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wallet", "Wallet", "{943B59B9-6C0A-41D3-88F1-42D9FF08EC76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Wallet.Domain", "MultiCreditCard.Wallet.Domain\MultiCreditCard.Wallet.Domain.csproj", "{313BA244-670F-480E-84D2-224FB1297956}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Wallet.Domain.Test", "MultiCreditCard.Wallet.Domain.Test\MultiCreditCard.Wallet.Domain.Test.csproj", "{6435D5BA-435E-448D-A40E-2275B2683440}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{2CBDFD4C-4515-4DD7-A240-45FB3693E799}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.CreditCard.Domain.Test", "MultiCreditCard.CreditCard.Domain.Test\MultiCreditCard.CreditCard.Domain.Test.csproj", "{BE01FB69-B4E3-4734-9C23-AD4B5E9C4E0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Infra.IoC", "MultiCreditCard.Infra.IoC\MultiCreditCard.Infra.IoC.csproj", "{00C7EAE7-35FA-4486-8F45-1E2ECE64FB7E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Domain", "MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj", "{6A27DF7F-42D0-434F-BB89-DB437EA7510F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Domain", "User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj", "{6A27DF7F-42D0-434F-BB89-DB437EA7510F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "User", "User", "{4E610262-33E1-46CF-87FC-FAF6D81B8E19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Command", "MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj", "{DBE1753A-E8F6-4471-A078-E88A19A510D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Command", "User\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj", "{DBE1753A-E8F6-4471-A078-E88A19A510D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Users.Command.Test", "MultiCreditCard.Users.Command.Test\MultiCreditCard.Users.Command.Test.csproj", "{CBB715A2-BE73-47AE-AB66-C35A8B4F5D38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Users.Command.Test", "User\MultiCreditCard.Users.Command.Test\MultiCreditCard.Users.Command.Test.csproj", "{CBB715A2-BE73-47AE-AB66-C35A8B4F5D38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Users.Domain.Test", "MultiCreditCard.Users.Domain.Test\MultiCreditCard.Users.Domain.Test.csproj", "{57F6A031-8197-46DB-BD15-089879DD76B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Users.Domain.Test", "User\MultiCreditCard.Users.Domain.Test\MultiCreditCard.Users.Domain.Test.csproj", "{57F6A031-8197-46DB-BD15-089879DD76B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Infra.Data", "MultiCreditCard.Users.Infra.Data\MultiCreditCard.Users.Infra.Data.csproj", "{784DDF78-9D87-4A09-A6D2-962F8D7F0924}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Users.Infra.Data", "User\MultiCreditCard.Users.Infra.Data\MultiCreditCard.Users.Infra.Data.csproj", "{784DDF78-9D87-4A09-A6D2-962F8D7F0924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Infra.Data.Mongo", "MultiCreditCard.Infra.Data.Mongo\MultiCreditCard.Infra.Data.Mongo.csproj", "{3DE0D136-9417-4DD9-A894-5CC4E57439DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Wallets.Domain", "Wallet\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj", "{5813CA0E-11A2-4902-B65C-EB88B76CC3E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Wallets.Domain.Test", "Wallet\MultiCreditCard.Wallets.Domain.Test\MultiCreditCard.Wallets.Domain.Test.csproj", "{54667A14-313A-494F-B81A-39643958388C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,14 +88,6 @@ Global
 		{2AB673E9-CFA8-4E29-A14F-29751D8AE015}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AB673E9-CFA8-4E29-A14F-29751D8AE015}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AB673E9-CFA8-4E29-A14F-29751D8AE015}.Release|Any CPU.Build.0 = Release|Any CPU
-		{313BA244-670F-480E-84D2-224FB1297956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{313BA244-670F-480E-84D2-224FB1297956}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{313BA244-670F-480E-84D2-224FB1297956}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{313BA244-670F-480E-84D2-224FB1297956}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6435D5BA-435E-448D-A40E-2275B2683440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6435D5BA-435E-448D-A40E-2275B2683440}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6435D5BA-435E-448D-A40E-2275B2683440}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6435D5BA-435E-448D-A40E-2275B2683440}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BE01FB69-B4E3-4734-9C23-AD4B5E9C4E0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BE01FB69-B4E3-4734-9C23-AD4B5E9C4E0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE01FB69-B4E3-4734-9C23-AD4B5E9C4E0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -122,6 +116,18 @@ Global
 		{784DDF78-9D87-4A09-A6D2-962F8D7F0924}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{784DDF78-9D87-4A09-A6D2-962F8D7F0924}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{784DDF78-9D87-4A09-A6D2-962F8D7F0924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DE0D136-9417-4DD9-A894-5CC4E57439DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DE0D136-9417-4DD9-A894-5CC4E57439DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DE0D136-9417-4DD9-A894-5CC4E57439DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DE0D136-9417-4DD9-A894-5CC4E57439DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5813CA0E-11A2-4902-B65C-EB88B76CC3E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5813CA0E-11A2-4902-B65C-EB88B76CC3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5813CA0E-11A2-4902-B65C-EB88B76CC3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5813CA0E-11A2-4902-B65C-EB88B76CC3E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54667A14-313A-494F-B81A-39643958388C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54667A14-313A-494F-B81A-39643958388C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54667A14-313A-494F-B81A-39643958388C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54667A14-313A-494F-B81A-39643958388C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -138,8 +144,6 @@ Global
 		{12BFF95E-5C43-4707-B129-F33A2876872F} = {6C7FD89F-97CB-49F5-879F-1C1C72D55C7B}
 		{46F93189-CBEB-4D2A-BBF5-0938A94719EB} = {6C7FD89F-97CB-49F5-879F-1C1C72D55C7B}
 		{943B59B9-6C0A-41D3-88F1-42D9FF08EC76} = {6C7FD89F-97CB-49F5-879F-1C1C72D55C7B}
-		{313BA244-670F-480E-84D2-224FB1297956} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
-		{6435D5BA-435E-448D-A40E-2275B2683440} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
 		{2CBDFD4C-4515-4DD7-A240-45FB3693E799} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
 		{BE01FB69-B4E3-4734-9C23-AD4B5E9C4E0C} = {46F93189-CBEB-4D2A-BBF5-0938A94719EB}
 		{00C7EAE7-35FA-4486-8F45-1E2ECE64FB7E} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
@@ -149,6 +153,9 @@ Global
 		{CBB715A2-BE73-47AE-AB66-C35A8B4F5D38} = {4E610262-33E1-46CF-87FC-FAF6D81B8E19}
 		{57F6A031-8197-46DB-BD15-089879DD76B5} = {12BFF95E-5C43-4707-B129-F33A2876872F}
 		{784DDF78-9D87-4A09-A6D2-962F8D7F0924} = {2CBDFD4C-4515-4DD7-A240-45FB3693E799}
+		{3DE0D136-9417-4DD9-A894-5CC4E57439DA} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
+		{5813CA0E-11A2-4902-B65C-EB88B76CC3E9} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
+		{54667A14-313A-494F-B81A-39643958388C} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {983DF906-986C-4DC1-9980-19B95A82D260}

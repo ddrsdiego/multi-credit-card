@@ -1,8 +1,7 @@
-﻿using MultiCreditCard.Users.Domain.Contracts.Repositories;
+﻿using MongoDB.Driver;
+using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
 using System;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using System.Threading.Tasks;
 
 namespace MultiCreditCard.Users.Infra.Data
@@ -27,7 +26,7 @@ namespace MultiCreditCard.Users.Infra.Data
             }
             catch (Exception ex)
             {
-                throw;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
