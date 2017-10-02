@@ -24,8 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiCreditCard.Infra.IoC\MultiCreditCard.Infra.IoC.csproj" />
-    <ProjectReference Include="..\MultiCreditCard.Query\MultiCreditCard.Query.csproj" />
-    <ProjectReference Include="..\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
+    <ProjectReference Include="..\User\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
   </ItemGroup>
 
 </Project>

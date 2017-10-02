@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MultiCreditCard.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UserController : Controller
     {
         private readonly IMediator _mediator;
@@ -24,7 +24,7 @@ namespace MultiCreditCard.Api.Controllers
                 return BadRequest();
             }
 
-            var response = await _mediator.Send(command);
+            var response = await  _mediator.Send(command);
 
             if (response.HasError)
             {

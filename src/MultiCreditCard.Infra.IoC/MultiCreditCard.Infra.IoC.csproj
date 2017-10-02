@@ -10,9 +10,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
-    <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
-    <ProjectReference Include="..\MultiCreditCard.Users.Infra.Data\MultiCreditCard.Users.Infra.Data.csproj" />
+    <ProjectReference Include="..\User\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
+    <ProjectReference Include="..\User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
+    <ProjectReference Include="..\User\MultiCreditCard.Users.Infra.Data\MultiCreditCard.Users.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

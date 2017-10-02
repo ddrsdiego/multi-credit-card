@@ -12,8 +12,12 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Repositories\" />
-    <Folder Include="Entities\" />
     <Folder Include="ValueObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CreditCard\MultiCreditCard.CreditCards.Domain\MultiCreditCard.CreditCards.Domain.csproj" />
+    <ProjectReference Include="..\..\User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
   </ItemGroup>
 
 </Project>
