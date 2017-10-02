@@ -9,4 +9,9 @@
     <PackageReference Include="MediatR" Version="3.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

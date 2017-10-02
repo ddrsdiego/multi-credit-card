@@ -5,8 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="2.0.3" />
-    <PackageReference Include="NUnit" Version="3.8.1" />
+    <Folder Include="Contracts\Services\" />
   </ItemGroup>
 
 </Project>

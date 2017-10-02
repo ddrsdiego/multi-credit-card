@@ -5,16 +5,24 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="3.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MultiCreditCard.Infra.IoC\MultiCreditCard.Infra.IoC.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Query\MultiCreditCard.Query.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="7.1.1" />
-    <PackageReference Include="MediatR" Version="3.0.1" />
+    <Folder Include="Contracts\Repositories\" />
+    <Folder Include="Contracts\Services\" />
+    <Folder Include="Entities\" />
+    <Folder Include="ValueObjects\" />
   </ItemGroup>
 
 </Project>
