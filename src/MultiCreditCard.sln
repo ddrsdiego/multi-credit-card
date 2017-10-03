@@ -60,7 +60,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.CreditCards
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.CreditCards.Domain.Test", "CreditCard\MultiCreditCard.CreditCards.Domain.Test\MultiCreditCard.CreditCards.Domain.Test.csproj", "{51EE48D5-4383-48DA-B308-6AE06989CA0A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Wallets.Domain.Test", "Wallet\MultiCreditCard.Wallets.Domain.Test\MultiCreditCard.Wallets.Domain.Test.csproj", "{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Wallets.Domain.Test", "MultiCreditCard.Wallets.Domain.Test\MultiCreditCard.Wallets.Domain.Test.csproj", "{26DB8827-BBB3-4289-ADC7-0150A4CF2108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -124,10 +124,10 @@ Global
 		{51EE48D5-4383-48DA-B308-6AE06989CA0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51EE48D5-4383-48DA-B308-6AE06989CA0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51EE48D5-4383-48DA-B308-6AE06989CA0A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26DB8827-BBB3-4289-ADC7-0150A4CF2108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26DB8827-BBB3-4289-ADC7-0150A4CF2108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26DB8827-BBB3-4289-ADC7-0150A4CF2108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26DB8827-BBB3-4289-ADC7-0150A4CF2108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -155,7 +155,7 @@ Global
 		{2367C5A8-81D5-4108-87CE-DDC8F7C85EDD} = {12BFF95E-5C43-4707-B129-F33A2876872F}
 		{2169D157-7C25-423C-B026-D194F775F05A} = {46F93189-CBEB-4D2A-BBF5-0938A94719EB}
 		{51EE48D5-4383-48DA-B308-6AE06989CA0A} = {46F93189-CBEB-4D2A-BBF5-0938A94719EB}
-		{3E95D0B3-4CD2-470A-9F20-3FD0992FD7A8} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
+		{26DB8827-BBB3-4289-ADC7-0150A4CF2108} = {943B59B9-6C0A-41D3-88F1-42D9FF08EC76}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {983DF906-986C-4DC1-9980-19B95A82D260}

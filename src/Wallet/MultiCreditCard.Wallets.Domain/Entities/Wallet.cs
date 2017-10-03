@@ -22,7 +22,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
         {
             get
             {
-                return _creditCards.Sum(x=>x.CreditLimit);
+                return _creditCards.Sum(x => x.CreditLimit);
             }
         }
 
@@ -38,16 +38,16 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         public void AddNewCreditCart(CreditCard newCreditCard)
         {
-            if (_creditCards.Where(x => x.Number == newCreditCard.Number).Any())
-                throw new InvalidOperationException($"Cartão de Crédito {newCreditCard.Number} já adicionado a carteira.");
+            if (_creditCards.Where(x => x.CreditCardNumber == newCreditCard.CreditCardNumber).Any())
+                throw new InvalidOperationException($"Cartão de Crédito {newCreditCard.CreditCardNumber} já adicionado a carteira.");
 
             _creditCards.Add(newCreditCard);
         }
 
         public void RemoveCreditCard(CreditCard creditCard)
         {
-            if (!_creditCards.Where(x => x.Number == creditCard.Number).Any())
-                throw new InvalidOperationException($"Cartão de Crédito {creditCard.Number} já removido da carteira.");
+            if (!_creditCards.Where(x => x.CreditCardNumber == creditCard.CreditCardNumber).Any())
+                throw new InvalidOperationException($"Cartão de Crédito {creditCard.CreditCardNumber} já removido da carteira.");
 
             _creditCards.Remove(creditCard);
         }
@@ -62,7 +62,14 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         public void Buy(decimal valueBuy)
         {
+            var purchaseDate = DateTime.Now.Day;
 
+            if (valueBuy > MaximumCreditLimit)
+                throw new InvalidOperationException($"Cartão de Crédito {valueBuy} já removido da carteira.");
+
+            var credit = CreditCards
+                            .Where(cc => cc.PayDay > purchaseDate)
+                            .FirstOrDefault();
         }
     }
 }
