@@ -67,9 +67,16 @@ namespace MultiCreditCard.Wallets.Domain.Entities
             if (valueBuy > MaximumCreditLimit)
                 throw new InvalidOperationException($"Cartão de Crédito {valueBuy} já removido da carteira.");
 
-            var credit = CreditCards
-                            .Where(cc => cc.PayDay > purchaseDate)
-                            .FirstOrDefault();
+            var creditCards = CreditCards
+                            .Where(cc => cc.CreditLimit >= valueBuy
+                                    && cc.PayDay > purchaseDate)
+                            .OrderBy(cc => cc.CreditLimit)
+                            .ToList();
+
+            if (creditCards.Any())
+            {
+
+            }
         }
     }
 }

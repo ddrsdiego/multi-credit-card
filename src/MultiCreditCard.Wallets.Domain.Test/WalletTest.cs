@@ -24,7 +24,7 @@ namespace MultiCreditCard.Wallets.Domain.Test
             wallet.AddNewCreditCart(americanCreditCard);
             wallet.AddNewCreditCart(masterCreditCard);
 
-            wallet.Buy(5100);
+            wallet.Buy(450);
         }
 
         private static User GetUser()
