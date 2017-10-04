@@ -32,9 +32,16 @@ namespace MultiCreditCard.Users.Domain.Services
             }
         }
 
-        public Task<User> GetUserByUserId(string email)
+        public async Task<User> GetUserByUserId(string userId)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return await _userRepository.GetUserByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

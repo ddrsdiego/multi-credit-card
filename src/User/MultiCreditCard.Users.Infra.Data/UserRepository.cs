@@ -49,5 +49,22 @@ namespace MultiCreditCard.Users.Infra.Data
 
             return user.FirstOrDefault();
         }
+
+        public async Task<User> GetUserByUserId(string userId)
+        {
+            try
+            {
+                var user = await UsersCollection.FindAsync(x => x.Id.Equals(userId));
+
+                if (user == null)
+                    return null;
+
+                return user.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException($"Erro ao criar o usuário {userId}. Erro: {ex.Message}");
+            }
+        }
     }
 }
