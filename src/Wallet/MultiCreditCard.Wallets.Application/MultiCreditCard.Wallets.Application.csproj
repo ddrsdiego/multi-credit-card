@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>MultiCreditCard.Wallets.Application</AssemblyName>
+    <RootNamespace>MultiCreditCard.Wallets.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+  </ItemGroup>
+
+</Project>

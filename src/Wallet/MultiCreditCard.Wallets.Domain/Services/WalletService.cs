@@ -1,11 +1,12 @@
 ﻿using MultiCreditCard.CreditCards.Domain.Contracts.Repositories;
 using MultiCreditCard.CreditCards.Domain.Entities;
+using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
 using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using MultiCreditCard.Wallets.Domain.Entities;
 using System;
 using System.Linq;
-using MultiCreditCard.Users.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace MultiCreditCard.Wallets.Domain.Services
 {
@@ -55,10 +56,17 @@ namespace MultiCreditCard.Wallets.Domain.Services
             _walletRepository.UpdateUserCreditLimit(wallet);
         }
 
-        public void CreateWallet(User user)
+        public async Task CreateWalletAsync(User user)
         {
             var newWallet = new Wallet(user);
-            _walletRepository.CreateWallet(newWallet);
+            try
+            {
+                await _walletRepository.CreateWalletAsync(newWallet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         private static CreditCard GetCardForBuy(Wallet wallet)

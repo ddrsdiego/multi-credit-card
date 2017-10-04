@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CreditCard\MultiCreditCard.CreditCards.Domain\MultiCreditCard.CreditCards.Domain.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />
     <ProjectReference Include="..\User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
     <ProjectReference Include="..\Wallet\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />
   </ItemGroup>

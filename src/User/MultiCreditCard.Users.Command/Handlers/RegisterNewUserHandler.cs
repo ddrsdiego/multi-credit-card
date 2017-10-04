@@ -2,10 +2,9 @@
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
 using MultiCreditCard.Users.Command.Validators;
-using MultiCreditCard.Users.Domain.Contracts.Repositories;
+using MultiCreditCard.Users.Domain.Contracts.Services;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Users.Domain.ValueObjects;
-using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
 using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using System;
 using System.Linq;
@@ -16,13 +15,14 @@ namespace MultiCreditCard.Users.Command.Handlers
     public class RegisterNewUserHandler : IAsyncRequestHandler<RegisterNewUserCommand, RegisterNewUserReponse>
     {
         private User _user;
-        private readonly IUserRepository _userRepository;
+        private readonly IUserServices _userServices;
         private readonly IWalletService _walletService;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
 
-        public RegisterNewUserHandler(IUserRepository userRepository)
+        public RegisterNewUserHandler(IUserServices userServices, IWalletService walletService)
         {
-            _userRepository = userRepository;
+            _userServices = userServices;
+            _walletService = walletService;
         }
 
         public Task<RegisterNewUserReponse> Handle(RegisterNewUserCommand message)
@@ -52,17 +52,17 @@ namespace MultiCreditCard.Users.Command.Handlers
             if (!results.IsValid)
                 results.Errors.ToList().ForEach(x => response.AddError(x.ErrorMessage));
 
-            var user = _userRepository.GetUserByEmail(command.Email).Result;
+            var user = _userServices.GetUserByEmail(command.Email).Result;
             if (user != null)
                 response.AddError($"Usuário ja criado para o email {command.Email}");
         }
 
-        private void RegisterNewUser(RegisterNewUserCommand command, RegisterNewUserReponse response)
+        private async void RegisterNewUser(RegisterNewUserCommand command, RegisterNewUserReponse response)
         {
             try
             {
-                _userRepository.CreateAsync(_user).ConfigureAwait(false);
-                _walletService.CreateWallet(_user);
+                await _userServices.CreateUserAsync(_user);
+                await _walletService.CreateWalletAsync(_user);
             }
             catch (Exception ex)
             {

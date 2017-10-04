@@ -1,11 +1,12 @@
 ﻿using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace MultiCreditCard.Wallets.Domain.Contracts.Repositories
 {
     public interface IWalletRepository
     {
-        void CreateWallet(Wallet wallet);
+        Task CreateWalletAsync(Wallet wallet);
 
         void AddNewCreditCart(Wallet wallet);
 

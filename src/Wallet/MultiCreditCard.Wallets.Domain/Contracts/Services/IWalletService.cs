@@ -1,5 +1,6 @@
 ﻿using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace MultiCreditCard.Wallets.Domain.Contracts.Services
 {
@@ -7,7 +8,7 @@ namespace MultiCreditCard.Wallets.Domain.Contracts.Services
     {
         void Buy(Wallet wallet, decimal valueBuy);
 
-        void CreateWallet(User user);
+        Task CreateWalletAsync(User user);
 
         void AddNewCreditCart(Wallet wallet);
 

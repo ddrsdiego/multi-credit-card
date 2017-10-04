@@ -27,6 +27,7 @@ namespace MultiCreditCard.Api
             services.AddMvc();
             services.AddMediatR(typeof(Startup));
             services.RegisterRepositories();
+            services.RegisterServices();
             services.RegisterHandler();
         }
 

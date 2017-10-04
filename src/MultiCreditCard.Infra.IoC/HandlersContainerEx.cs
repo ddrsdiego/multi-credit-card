@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using MultiCreditCard.Users.Application.Handlers;
 using MultiCreditCard.Users.Command.Handlers;
 
 namespace MultiCreditCard.Infra.IoC
@@ -8,7 +9,8 @@ namespace MultiCreditCard.Infra.IoC
     {
         public static void RegisterHandler(this IServiceCollection services)
         {
-             services.AddMediatR(typeof(RegisterNewUserHandler).Assembly);
+             services.AddMediatR(typeof(RegisterNewUserHandler).Assembly,
+                                    typeof(RequestAddNewCreditCardHandler).Assembly);
         }
     }
 }
