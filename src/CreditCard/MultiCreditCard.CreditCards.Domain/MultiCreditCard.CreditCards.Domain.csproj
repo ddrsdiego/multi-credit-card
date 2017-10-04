@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Repositories\" />
-    <Folder Include="Contracts\Services\" />
-    <Folder Include="ValueObjects\" />
+    <Compile Remove="Contracts\Services\**" />
+    <Compile Remove="ValueObjects\**" />
+    <EmbeddedResource Remove="Contracts\Services\**" />
+    <EmbeddedResource Remove="ValueObjects\**" />
+    <None Remove="Contracts\Services\**" />
+    <None Remove="ValueObjects\**" />
   </ItemGroup>
 
 </Project>

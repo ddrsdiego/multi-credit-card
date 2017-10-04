@@ -29,5 +29,13 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
         public decimal CreditLimit { get; set; }
         public string CVV { get; private set; }
         public CreditCardType CreditCardType { get; private set; }
+
+        public void Debit(decimal value)
+        {
+            if (value > CreditLimit)
+                throw new InvalidOperationException($"Não há saldo disponível no cartão {CreditCardNumber} para realizar a operação");
+
+            CreditLimit = CreditLimit - value;
+        }
     }
 }

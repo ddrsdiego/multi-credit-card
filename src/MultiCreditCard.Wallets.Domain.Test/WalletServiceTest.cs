@@ -1,16 +1,17 @@
-using MultiCreditCard.CreditCards.Domain.Entities;
+﻿using MultiCreditCard.CreditCards.Domain.Entities;
 using MultiCreditCard.CreditCards.Domain.Enums;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Users.Domain.ValueObjects;
 using MultiCreditCard.Wallets.Domain.Entities;
+using MultiCreditCard.Wallets.Domain.Services;
 using Xunit;
 
 namespace MultiCreditCard.Wallets.Domain.Test
 {
-    public class WalletTest
+    public class WalletServiceTest
     {
         [Fact]
-        public void Test1()
+        public void TesteMaisUm()
         {
             var user = GetUser();
 
@@ -22,6 +23,9 @@ namespace MultiCreditCard.Wallets.Domain.Test
 
             wallet.AddNewCreditCart(vidaCreditCard);
             wallet.AddNewCreditCart(americanCreditCard);
+
+            var walletService = new WalletService(null, null);
+            walletService.Buy(wallet, 450);
         }
 
         private static User GetUser()

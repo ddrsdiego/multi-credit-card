@@ -5,6 +5,8 @@ using MultiCreditCard.Users.Command.Validators;
 using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Users.Domain.ValueObjects;
+using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
+using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +17,7 @@ namespace MultiCreditCard.Users.Command.Handlers
     {
         private User _user;
         private readonly IUserRepository _userRepository;
+        private readonly IWalletService _walletService;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
 
         public RegisterNewUserHandler(IUserRepository userRepository)
@@ -59,6 +62,7 @@ namespace MultiCreditCard.Users.Command.Handlers
             try
             {
                 _userRepository.CreateAsync(_user).ConfigureAwait(false);
+                _walletService.CreateWallet(_user);
             }
             catch (Exception ex)
             {

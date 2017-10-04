@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+    <ProjectReference Include="..\..\Wallet\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />
     <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
   </ItemGroup>
 

@@ -60,23 +60,5 @@ namespace MultiCreditCard.Wallets.Domain.Entities
             UserCreditLimit = newUserCreditLimit;
         }
 
-        public void Buy(decimal valueBuy)
-        {
-            var purchaseDate = DateTime.Now.Day;
-
-            if (valueBuy > MaximumCreditLimit)
-                throw new InvalidOperationException($"Cartão de Crédito {valueBuy} já removido da carteira.");
-
-            var creditCards = CreditCards
-                            .Where(cc => cc.CreditLimit >= valueBuy
-                                    && cc.PayDay > purchaseDate)
-                            .OrderBy(cc => cc.CreditLimit)
-                            .ToList();
-
-            if (creditCards.Any())
-            {
-
-            }
-        }
     }
 }
