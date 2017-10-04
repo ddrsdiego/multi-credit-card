@@ -119,9 +119,9 @@ namespace MultiCreditCard.Wallets.Domain.Services
             Buy(wallet, diffValue);
         }
 
-        public Task<Wallet> GetWalletByUserId(string userId)
+        public async Task<Wallet> GetWalletByUserId(string userId)
         {
-            throw new NotImplementedException();
+            return await _walletRepository.GetWalletByUserId(userId);
         }
     }
 }

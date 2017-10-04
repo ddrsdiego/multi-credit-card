@@ -52,7 +52,7 @@ namespace MultiCreditCard.Users.Command.Handlers
 
             var user = _userServices.GetUserByEmail(command.Email).Result;
             if (user != null)
-                response.AddError($"Usuário ja criado para o email {command.Email}");
+                response.AddError($"Usuário ja criado para o email {user.Email.EletronicAddress}");
         }
 
         private async void RegisterNewUser(RegisterNewUserCommand command, RegisterNewUserReponse response)

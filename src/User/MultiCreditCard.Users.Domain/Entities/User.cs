@@ -15,6 +15,7 @@ namespace MultiCreditCard.Users.Domain.Entities
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentException(nameof(userName));
 
+            Id = Guid.NewGuid().ToString();
             UserName = userName;
             DocumentNumber = documentNumber;
             Email = email;

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using MultiCreditCard.Users.Application.Handlers;
 using MultiCreditCard.Users.Command.Handlers;
+using MultiCreditCard.Wallets.Application.Handlers;
 
 namespace MultiCreditCard.Infra.IoC
 {

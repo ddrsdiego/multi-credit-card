@@ -1,6 +1,7 @@
 ﻿using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Contracts.Services;
 using MultiCreditCard.Users.Domain.Entities;
+using System;
 using System.Threading.Tasks;
 
 namespace MultiCreditCard.Users.Domain.Services
@@ -21,7 +22,14 @@ namespace MultiCreditCard.Users.Domain.Services
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return await _userRepository.GetUserByEmail(email);
+            try
+            {
+                return await _userRepository.GetUserByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public Task<User> GetUserByUserId(string email)

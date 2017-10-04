@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using MongoDB.Bson;
 using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
 using MultiCreditCard.Wallets.Domain.Entities;
 using System;
@@ -10,6 +11,17 @@ namespace MultiCreditCard.Wallets.Infra.Data
     {
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
+
+        private IMongoCollection<Wallet> _walletCollection;
+        private IMongoCollection<Wallet> WalletCollection
+        {
+            get
+            {
+                if (_walletCollection == null)
+                    _walletCollection = _database.GetCollection<Wallet>(nameof(Wallet));
+                return _walletCollection;
+            }
+        }
 
         public WalletRepository()
         {
@@ -27,13 +39,22 @@ namespace MultiCreditCard.Wallets.Infra.Data
         {
             try
             {
-                var collection = _database.GetCollection<Wallet>(nameof(Wallet));
-                await collection.InsertOneAsync(wallet);
+                await WalletCollection.InsertOneAsync(wallet);
             }
             catch (Exception ex)
             {
                 throw new InvalidOperationException($"Erro ao criar a carteira para o usuário {wallet.User.UserName}. Erro: {ex.Message}");
             }
+        }
+
+        public async Task<Wallet> GetWalletByUserId(string userId)
+        {
+            var wallet = await WalletCollection.FindAsync(w => w.User.Id.Equals(userId));
+
+            if (wallet == null)
+                return null;
+
+            return wallet.FirstOrDefault();
         }
 
         public void RemoveCreditCart(Wallet wallet)

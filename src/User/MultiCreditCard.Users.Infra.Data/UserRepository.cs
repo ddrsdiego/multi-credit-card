@@ -11,6 +11,17 @@ namespace MultiCreditCard.Users.Infra.Data
         protected static IMongoClient _client;
         protected static IMongoDatabase _database;
 
+        private IMongoCollection<User> _usersCollection;
+        private IMongoCollection<User> UsersCollection
+        {
+            get
+            {
+                if (_usersCollection == null)
+                    _usersCollection = _database.GetCollection<User>(nameof(User));
+                return _usersCollection;
+            }
+        }
+
         public UserRepository()
         {
             _client = new MongoClient("mongodb://admin:admin@ds036577.mlab.com:36577/multi-credit-card");
@@ -21,8 +32,7 @@ namespace MultiCreditCard.Users.Infra.Data
         {
             try
             {
-                var collection = _database.GetCollection<User>(nameof(User));
-                await collection.InsertOneAsync(user);
+                await UsersCollection.InsertOneAsync(user);
             }
             catch (Exception ex)
             {
@@ -32,8 +42,8 @@ namespace MultiCreditCard.Users.Infra.Data
 
         public async Task<User> GetUserByEmail(string email)
         {
-            var collection = _database.GetCollection<User>(nameof(User));
-            var user = await collection.FindAsync(x => x.Email.EletronicAddress.Equals(email));
+            var user = await UsersCollection.FindAsync(x => x.Email.EletronicAddress.Equals(email));
+
             if (user == null)
                 return null;
 

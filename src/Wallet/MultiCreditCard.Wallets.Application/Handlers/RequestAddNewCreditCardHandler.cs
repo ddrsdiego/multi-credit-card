@@ -11,7 +11,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MultiCreditCard.Users.Application.Handlers
+namespace MultiCreditCard.Wallets.Application.Handlers
 {
     public class RequestAddNewCreditCardHandler : IAsyncRequestHandler<RequestAddNewCreditCardCommand, RequestAddNewCreditCardResponse>
     {
@@ -73,7 +73,7 @@ namespace MultiCreditCard.Users.Application.Handlers
 
         private async void VerifyHasWallet(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
-            _wallet = await _walletService.GetWalletByUserId(_user.Email.EletronicAddress);
+            _wallet = await _walletService.GetWalletByUserId(_user.Id);
             if (_wallet == null)
                 response.AddError($"Não há nenhuma carteira para o cliente.");
         }
