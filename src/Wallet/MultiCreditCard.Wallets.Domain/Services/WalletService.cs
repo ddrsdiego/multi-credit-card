@@ -43,12 +43,26 @@ namespace MultiCreditCard.Wallets.Domain.Services
 
         public void AddNewCreditCart(Wallet wallet)
         {
-            _walletRepository.AddNewCreditCart(wallet);
+            try
+            {
+                _walletRepository.AddNewCreditCart(wallet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public void RemoveCreditCart(Wallet wallet)
         {
-            _walletRepository.RemoveCreditCart(wallet);
+            try
+            {
+                _walletRepository.RemoveCreditCart(wallet);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public void UpdateUserCreditLimit(Wallet wallet)
@@ -105,5 +119,9 @@ namespace MultiCreditCard.Wallets.Domain.Services
             Buy(wallet, diffValue);
         }
 
+        public Task<Wallet> GetWalletByUserId(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

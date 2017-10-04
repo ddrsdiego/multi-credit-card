@@ -23,5 +23,10 @@ namespace MultiCreditCard.Users.Domain.Services
         {
             return await _userRepository.GetUserByEmail(email);
         }
+
+        public Task<User> GetUserByUserId(string email)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

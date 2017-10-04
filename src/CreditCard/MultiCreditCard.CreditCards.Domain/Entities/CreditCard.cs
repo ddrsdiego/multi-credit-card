@@ -5,7 +5,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
 {
     public class CreditCard
     {
-        public CreditCard()
+        protected CreditCard()
         {
 
         }
@@ -19,6 +19,11 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
             CVV = cvv;
             CreditLimit = creditLimit;
             PayDay = payDay;
+        }
+
+        public static CreditCard DefaultEntity()
+        {
+            return new CreditCard();
         }
 
         public decimal CreditCardNumber { get; private set; }

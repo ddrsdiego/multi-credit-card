@@ -7,16 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Validators\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.1.1" />
     <PackageReference Include="MediatR" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CreditCard\MultiCreditCard.CreditCards.Domain\MultiCreditCard.CreditCards.Domain.csproj" />
     <ProjectReference Include="..\..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
-    <ProjectReference Include="..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+    <ProjectReference Include="..\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />
   </ItemGroup>
 
 </Project>

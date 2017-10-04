@@ -8,6 +8,8 @@ namespace MultiCreditCard.Wallets.Domain.Contracts.Services
     {
         void Buy(Wallet wallet, decimal valueBuy);
 
+        Task<Wallet> GetWalletByUserId(string userId);
+
         Task CreateWalletAsync(User user);
 
         void AddNewCreditCart(Wallet wallet);
