@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="2.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\CreditCard\MultiCreditCard.CreditCards.Domain\MultiCreditCard.CreditCards.Domain.csproj" />
     <ProjectReference Include="..\..\User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
     <ProjectReference Include="..\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />

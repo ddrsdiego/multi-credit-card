@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MultiCreditCard.Users.Domain.Contracts.Services;
+using MultiCreditCard.Users.Domain.Services;
 using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using MultiCreditCard.Wallets.Domain.Services;
 using System;
@@ -11,6 +13,7 @@ namespace MultiCreditCard.Infra.IoC
     {
         public static void RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IWalletService, WalletService>();
         }
     }

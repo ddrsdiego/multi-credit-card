@@ -21,18 +21,18 @@ namespace MultiCreditCard.Users.Infra.Data
         {
             try
             {
-                var collection = _database.GetCollection<User>("users");
+                var collection = _database.GetCollection<User>(nameof(User));
                 await collection.InsertOneAsync(user);
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException(ex.Message);
+                throw new InvalidOperationException($"Erro ao criar o usuário {user.UserName}");
             }
         }
 
         public async Task<User> GetUserByEmail(string email)
         {
-            var collection = _database.GetCollection<User>("users");
+            var collection = _database.GetCollection<User>(nameof(User));
             var user = await collection.FindAsync(x => x.Email.EletronicAddress.Equals(email));
             if (user == null)
                 return null;

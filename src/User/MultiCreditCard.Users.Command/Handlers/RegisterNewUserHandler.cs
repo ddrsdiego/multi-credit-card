@@ -14,7 +14,6 @@ namespace MultiCreditCard.Users.Command.Handlers
 {
     public class RegisterNewUserHandler : IAsyncRequestHandler<RegisterNewUserCommand, RegisterNewUserReponse>
     {
-        private User _user;
         private readonly IUserServices _userServices;
         private readonly IWalletService _walletService;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
@@ -33,10 +32,6 @@ namespace MultiCreditCard.Users.Command.Handlers
             if (response.HasError)
                 return Task.FromResult(response);
 
-            AdapterCommantToEntity(message, response);
-            if (response.HasError)
-                return Task.FromResult(response);
-
             RegisterNewUser(message, response);
             if (response.HasError)
                 return Task.FromResult(response);
@@ -50,7 +45,10 @@ namespace MultiCreditCard.Users.Command.Handlers
             var validationSucceeded = results.IsValid;
 
             if (!results.IsValid)
+            {
                 results.Errors.ToList().ForEach(x => response.AddError(x.ErrorMessage));
+                return;
+            }
 
             var user = _userServices.GetUserByEmail(command.Email).Result;
             if (user != null)
@@ -61,8 +59,12 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             try
             {
-                await _userServices.CreateUserAsync(_user);
-                await _walletService.CreateWalletAsync(_user);
+                var newUser = AdapterCommantToEntity(command, response);
+                if (response.HasError)
+                    return;
+
+                await _userServices.CreateUserAsync(newUser);
+                await _walletService.CreateWalletAsync(newUser);
             }
             catch (Exception ex)
             {
@@ -70,19 +72,23 @@ namespace MultiCreditCard.Users.Command.Handlers
             }
         }
 
-        private void AdapterCommantToEntity(RegisterNewUserCommand command, RegisterNewUserReponse response)
+        private User AdapterCommantToEntity(RegisterNewUserCommand command, RegisterNewUserReponse response)
         {
+            var newUser = User.DefaultEntity();
+
             try
             {
                 var email = new Email(command.Email);
                 var password = new Password(command.Password);
 
-                _user = new User(command.UserName, command.DocumentNumber, email, password);
+                newUser = new User(command.UserName, command.DocumentNumber, email, password);
             }
             catch (Exception ex)
             {
                 response.AddError($"Problemas a criar usuário. {ex.Message}");
             }
+
+            return newUser;
         }
     }
 }
