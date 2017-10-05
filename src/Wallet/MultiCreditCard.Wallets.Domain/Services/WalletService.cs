@@ -73,6 +73,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
         public async Task CreateWalletAsync(User user)
         {
             var newWallet = new Wallet(user);
+
             try
             {
                 await _walletRepository.CreateWalletAsync(newWallet);

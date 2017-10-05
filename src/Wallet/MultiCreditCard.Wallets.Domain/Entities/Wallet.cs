@@ -10,6 +10,11 @@ namespace MultiCreditCard.Wallets.Domain.Entities
     {
         private IList<CreditCard> _creditCards;
 
+        protected Wallet()
+        {
+
+        }
+
         public Wallet(User user)
         {
             User = user;
@@ -65,5 +70,6 @@ namespace MultiCreditCard.Wallets.Domain.Entities
             UserCreditLimit = newUserCreditLimit;
         }
 
+        public static Wallet DefaultEntity() => new Wallet();
     }
 }

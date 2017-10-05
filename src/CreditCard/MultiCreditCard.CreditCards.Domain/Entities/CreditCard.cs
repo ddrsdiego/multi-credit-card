@@ -21,17 +21,14 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
             PayDay = payDay;
         }
 
-        public static CreditCard DefaultEntity()
-        {
-            return new CreditCard();
-        }
+        public static CreditCard DefaultEntity() => new CreditCard();
 
         public decimal CreditCardNumber { get; private set; }
         public string PrintedName { get; private set; }
-        public int PayDay { get; set; }
+        public int PayDay { get; private set; }
         public DateTime MaturityDate { get; set; }
         public string ExpirationDate { get; private set; }
-        public decimal CreditLimit { get; set; }
+        public decimal CreditLimit { get; private set; }
         public string CVV { get; private set; }
         public CreditCardType CreditCardType { get; private set; }
 

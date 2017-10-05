@@ -29,6 +29,7 @@ namespace MultiCreditCard.Api
             services.RegisterRepositories();
             services.RegisterServices();
             services.RegisterHandler();
+            services.AddSingleton<IConfiguration>(_ => Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

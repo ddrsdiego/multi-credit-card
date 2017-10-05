@@ -72,7 +72,7 @@ namespace MultiCreditCard.Users.Command.Handlers
             }
         }
 
-        private User AdapterCommantToEntity(RegisterNewUserCommand command, RegisterNewUserReponse response)
+        private static User AdapterCommantToEntity(RegisterNewUserCommand command, RegisterNewUserReponse response)
         {
             var newUser = User.DefaultEntity();
 

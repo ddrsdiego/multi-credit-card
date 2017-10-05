@@ -30,9 +30,6 @@ namespace MultiCreditCard.Users.Domain.Entities
         public Password Password { get; private set; }
         public DateTime CreationDate { get; private set; }
 
-        public static User DefaultEntity()
-        {
-            return new User();
-        }
+        public static User DefaultEntity() => new User();
     }
 }
