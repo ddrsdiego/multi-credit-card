@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CCC1795-2163-439A-80B9-01A98BFF43B7}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		..\ScriptsTables.sql = ..\ScriptsTables.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Api", "MultiCreditCard.Api\MultiCreditCard.Api.csproj", "{F39560F3-5E79-4962-877E-E10BF246A53E}"
