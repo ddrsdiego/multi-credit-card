@@ -16,4 +16,8 @@
     <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Context\" />
+  </ItemGroup>
+
 </Project>

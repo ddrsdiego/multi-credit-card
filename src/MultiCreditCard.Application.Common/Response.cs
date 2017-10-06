@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace MultiCreditCard.Application.Common
 {
-    public abstract class Response
+    public class Response
     {
         private IList<string> _erros;
 
-        protected Response()
+        public Response()
         {
             _erros = new List<string>();
         }

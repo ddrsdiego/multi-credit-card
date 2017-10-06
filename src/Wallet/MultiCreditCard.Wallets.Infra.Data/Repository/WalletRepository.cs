@@ -31,7 +31,8 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
                     conn.Execute(WalletStatement.AddNewCreditCart, new { walletId = wallet.WalletId, creditCardNumber = creditCard.CreditCardNumber });
                 });
 
-                conn.Execute("UPDATE WALLETS SET UpdateDate = GETDATE() where WalletId = @WalletId", new { walletId = wallet.WalletId });
+                var userCreditLimit = wallet.CreditCards.Sum(x => x.CreditLimit);
+                conn.Execute("UPDATE WALLETS SET UserCreditLimit = @userCreditLimit, UpdateDate = GETDATE() where WalletId = @WalletId", new { userCreditLimit = userCreditLimit, walletId = wallet.WalletId });
             }
         }
 
@@ -96,7 +97,8 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
                             walletEntry.CreditCards = new List<CreditCard>();
                             walletDictionary.Add(walletEntry.WalletId, walletEntry);
                         }
-                        walletEntry.CreditCards.Add(creditCard);
+                        if (creditCard != null)
+                            walletEntry.CreditCards.Add(creditCard);
 
                         return walletEntry;
                     },

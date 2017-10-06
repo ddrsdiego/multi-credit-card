@@ -6,7 +6,7 @@ namespace MultiCreditCard.Wallets.Domain.Contracts.Services
 {
     public interface IWalletService
     {
-        void Buy(Wallet wallet, decimal valueBuy);
+        void Buy(Wallet wallet);
 
         Task<Wallet> GetWalletByUserId(string userId);
 

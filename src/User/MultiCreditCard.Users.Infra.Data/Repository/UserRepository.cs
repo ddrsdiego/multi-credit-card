@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
+using MultiCreditCard.Users.Domain.ValueObjects;
 using MultiCreditCard.Users.Infra.Data.Statement;
 using System;
 using System.Data.SqlClient;
@@ -62,15 +63,15 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
 
         public async Task<User> GetUserByUserId(string userId)
         {
-            var user = User.DefaultEntity();
+            var userResult = User.DefaultEntity();
 
             try
             {
                 using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
                 {
-                    user = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByUserId, new { userId = userId });
+                    userResult = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByUserId, new { userId = userId });
                 }
-                return user;
+                return userResult;
             }
             catch (Exception ex)
             {

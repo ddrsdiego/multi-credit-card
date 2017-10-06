@@ -25,7 +25,7 @@ namespace MultiCreditCard.Wallets.Domain.Test
             wallet.AddNewCreditCart(americanCreditCard);
 
             var walletService = new WalletService(null, null);
-            walletService.Buy(wallet, 450);
+            walletService.Buy(wallet);
         }
 
         private static User GetUser()

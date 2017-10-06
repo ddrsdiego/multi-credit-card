@@ -21,25 +21,8 @@ namespace MultiCreditCard.Wallets.Domain.Services
             _creditCardService = creditCardService;
         }
 
-        public void Buy(Wallet wallet, decimal valueBuy)
+        public void Buy(Wallet wallet)
         {
-            var purchaseDate = DateTime.Now.Day;
-
-            if (!wallet.CreditCards.Any())
-                throw new InvalidOperationException("Nenhum cartão de crédito na carteira para realizar a compra.");
-
-            if (valueBuy > wallet.MaximumCreditLimit)
-                throw new InvalidOperationException($"Não há saldo suficiente na carteira para realizar a compra.");
-
-            var cardForBuy = GetCardForBuy(wallet);
-
-            if (cardForBuy != null && cardForBuy.CreditLimit >= valueBuy)
-                cardForBuy.Debit(valueBuy);
-            else
-            {
-                BuyWithMoreThaOneCard(wallet, cardForBuy, valueBuy);
-            }
-
             wallet.CreditCards.ToList().ForEach(creditCard =>
             {
                 _creditCardService.UpdateCreditCardLimit(creditCard);
@@ -129,7 +112,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             var diffValue = valueBuy - creditLimit;
 
             creditCard.Debit(creditLimit);
-            Buy(wallet, diffValue);
+            //Buy(wallet, diffValue);
         }
 
         public async Task<Wallet> GetWalletByUserId(string userId)

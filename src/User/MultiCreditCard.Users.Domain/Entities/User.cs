@@ -7,7 +7,7 @@ namespace MultiCreditCard.Users.Domain.Entities
     {
         protected User()
         {
-            Email = new Email();
+
         }
 
         public User(string userName, decimal documentNumber, Email email, Password password)

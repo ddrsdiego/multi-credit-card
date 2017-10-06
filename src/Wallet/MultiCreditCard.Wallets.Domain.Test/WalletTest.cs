@@ -2,6 +2,7 @@ using MultiCreditCard.CreditCards.Domain.Entities;
 using MultiCreditCard.CreditCards.Domain.Enums;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Users.Domain.ValueObjects;
+using MultiCreditCard.Wallets.Domain.Services;
 using MultiCreditCard.Wallets.Domain.Entities;
 using Xunit;
 
@@ -14,14 +15,17 @@ namespace MultiCreditCard.Wallets.Domain.Test
         {
             var user = GetUser();
 
-            var vidaCreditCard = new CreditCard(CreditCardType.Visa, 4539012657749922, "MELISSA DAVIDSON", "01/18", 3, "669", 400);
-            var americanCreditCard = new CreditCard(CreditCardType.AmericanExpressa, 344241982621208, "MELISSA DAVIDSON", "05/08", 15, "949", 100);
-            //var masterCreditCard = new CreditCard(CreditCardType.Visa, 4532692653021082, "MELISSA DAVIDSON", "10/19", 15, "647", 2000);
+            var vidaCreditCard = new CreditCard(CreditCardType.Visa, 4539012657749922, "MELISSA DAVIDSON", "01/18", 15, "669", 0);
+            var americanCreditCard = new CreditCard(CreditCardType.AmericanExpressa, 344241982621208, "MELISSA DAVIDSON", "05/08", 4, "949", 1250);
+            var masterCreditCard = new CreditCard(CreditCardType.Visa, 4532692653021082, "MELISSA DAVIDSON", "10/19", 4, "647", 1250);
 
             var wallet = new Wallet(user);
 
             wallet.AddNewCreditCart(vidaCreditCard);
             wallet.AddNewCreditCart(americanCreditCard);
+            wallet.AddNewCreditCart(masterCreditCard);
+
+            wallet.Buy(1300);
         }
 
         private static User GetUser()

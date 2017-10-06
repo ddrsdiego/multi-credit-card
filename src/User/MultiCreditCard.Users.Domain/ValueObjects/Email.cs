@@ -7,7 +7,7 @@ namespace MultiCreditCard.Users.Domain.ValueObjects
     {
         private const string EMAIL_REGEX = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
 
-        public Email()
+        protected Email()
         {
 
         }

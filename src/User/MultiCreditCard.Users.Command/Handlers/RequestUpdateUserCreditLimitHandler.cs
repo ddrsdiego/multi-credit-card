@@ -1,33 +1,34 @@
 ﻿using MediatR;
+using MultiCreditCard.Application.Common;
+using MultiCreditCard.Users.Command.Commands;
+using MultiCreditCard.Users.Command.Validators;
 using MultiCreditCard.Users.Domain.Contracts.Services;
 using MultiCreditCard.Users.Domain.Entities;
-using MultiCreditCard.Wallets.Application.Commands;
-using MultiCreditCard.Wallets.Application.Reponse;
-using MultiCreditCard.Wallets.Application.Validators;
 using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using MultiCreditCard.Wallets.Domain.Entities;
-using MultiCreditCard.Wallets.Domain.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MultiCreditCard.Wallets.Application.Handlers
+namespace MultiCreditCard.Users.Command.Handlers
 {
-    public class RequestCreditCardBuyHandler : IAsyncRequestHandler<RequestCreditCardBuyCommand, RequestCreditCardBuyResponse>
+    public class RequestUpdateUserCreditLimitHandler : IAsyncRequestHandler<RequestUpdateUserCreditLimitCommand, Response>
     {
         private User _user;
         private Wallet _wallet;
+
         private readonly IUserServices _userService;
         private readonly IWalletService _walletService;
-        private readonly RequestCreditCardBuyValidator _validator = new RequestCreditCardBuyValidator();
+        private readonly RequestUpdateUserCreditLimitValidator _validator;
 
-        public RequestCreditCardBuyHandler(IUserServices userService, IWalletService walletService)
+        public RequestUpdateUserCreditLimitHandler(IWalletService walletService, IUserServices userService)
         {
-            _userService = userService;
             _walletService = walletService;
+            _userService = userService;
+            _validator = new RequestUpdateUserCreditLimitValidator();
         }
 
-        public Task<RequestCreditCardBuyResponse> Handle(RequestCreditCardBuyCommand message)
+        public Task<Response> Handle(RequestUpdateUserCreditLimitCommand message)
         {
             var response = message.Response;
 
@@ -35,14 +36,14 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             if (response.HasError)
                 return Task.FromResult(response);
 
-            RequestBuy(message, response);
+            UpdateUserCreditLimit(message, response);
             if (response.HasError)
                 return Task.FromResult(response);
 
             return Task.FromResult(response);
         }
 
-        private void ValidateCommand(RequestCreditCardBuyCommand message, RequestCreditCardBuyResponse response)
+        private void ValidateCommand(RequestUpdateUserCreditLimitCommand message, Response response)
         {
             var results = _validator.Validate(message);
             if (!results.IsValid)
@@ -60,7 +61,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
                 return;
         }
 
-        private void VerifyUser(RequestCreditCardBuyCommand command, RequestCreditCardBuyResponse response)
+        private void VerifyUser(RequestUpdateUserCreditLimitCommand command, Response response)
         {
             try
             {
@@ -74,7 +75,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             }
         }
 
-        private void VerifyHasWallet(RequestCreditCardBuyCommand command, RequestCreditCardBuyResponse response)
+        private void VerifyHasWallet(RequestUpdateUserCreditLimitCommand command, Response response)
         {
             try
             {
@@ -88,16 +89,16 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             }
         }
 
-        private void RequestBuy(RequestCreditCardBuyCommand command, RequestCreditCardBuyResponse response)
+        private void UpdateUserCreditLimit(RequestUpdateUserCreditLimitCommand command, Response response)
         {
             try
             {
-                _wallet.Buy(command.AmountValue);
-                _walletService.Buy(_wallet);
+                _wallet.UpdateUserCreditLimit(command.NewCreditLimit);
+                _walletService.UpdateUserCreditLimit(_wallet);
             }
             catch (Exception ex)
             {
-                response.AddError($"Erro ao realizar a compra. {ex.Message}");
+                response.AddError($"Erro ao atualizar o valor de limite da carteira. {ex.Message}");
             }
         }
     }
