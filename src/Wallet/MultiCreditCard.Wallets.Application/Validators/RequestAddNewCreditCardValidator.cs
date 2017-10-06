@@ -21,7 +21,7 @@ namespace MultiCreditCard.Wallets.Application.Validators
 
             RuleFor(card => card.ExpirationDate)
                 .NotEmpty()
-                .WithMessage("Dia do pagamento da fatura deve não deve ser zero.");
+                .WithMessage("Data de expiração do cartão deve ser preenchida.");
 
             RuleFor(card => card.CreditLimit)
                 .GreaterThan(0)

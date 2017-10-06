@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using MultiCreditCard.Users.Application.Commands;
+using MultiCreditCard.Wallets.Application.Commands;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,7 +16,9 @@ namespace MultiCreditCard.Api.Controllers
             _mediator = mediator;
         }
 
-        public async Task<IActionResult> AddNewCreditCart([FromBody] RequestAddNewCreditCardCommand command)
+        [HttpPost]
+        [Route("buy")]
+        public async Task<IActionResult> RequestCreditCardBuy([FromBody] RequestCreditCardBuyCommand command)
         {
             if (command == null)
                 return BadRequest();

@@ -5,11 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Contracts\Services\**" />
     <Compile Remove="ValueObjects\**" />
-    <EmbeddedResource Remove="Contracts\Services\**" />
     <EmbeddedResource Remove="ValueObjects\**" />
-    <None Remove="Contracts\Services\**" />
     <None Remove="ValueObjects\**" />
   </ItemGroup>
 

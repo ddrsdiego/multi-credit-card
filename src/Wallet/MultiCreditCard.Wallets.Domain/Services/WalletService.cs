@@ -1,4 +1,4 @@
-﻿using MultiCreditCard.CreditCards.Domain.Contracts.Repositories;
+﻿using MultiCreditCard.CreditCards.Domain.Contracts.Service;
 using MultiCreditCard.CreditCards.Domain.Entities;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
@@ -13,12 +13,12 @@ namespace MultiCreditCard.Wallets.Domain.Services
     public class WalletService : IWalletService
     {
         private readonly IWalletRepository _walletRepository;
-        private readonly ICreditCardRepository _creditCardRepository;
+        private readonly ICreditCardService _creditCardService;
 
-        public WalletService(IWalletRepository walletRepository, ICreditCardRepository creditCardRepository)
+        public WalletService(IWalletRepository walletRepository, ICreditCardService creditCardService)
         {
             _walletRepository = walletRepository;
-            _creditCardRepository = creditCardRepository;
+            _creditCardService = creditCardService;
         }
 
         public void Buy(Wallet wallet, decimal valueBuy)
@@ -39,6 +39,11 @@ namespace MultiCreditCard.Wallets.Domain.Services
             {
                 BuyWithMoreThaOneCard(wallet, cardForBuy, valueBuy);
             }
+
+            wallet.CreditCards.ToList().ForEach(creditCard =>
+            {
+                _creditCardService.UpdateCreditCardLimit(creditCard);
+            });
         }
 
         public void AddNewCreditCart(Wallet wallet)
@@ -47,7 +52,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             {
                 _walletRepository.AddNewCreditCart(wallet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -59,7 +64,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             {
                 _walletRepository.RemoveCreditCart(wallet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -67,7 +72,14 @@ namespace MultiCreditCard.Wallets.Domain.Services
 
         public void UpdateUserCreditLimit(Wallet wallet)
         {
-            _walletRepository.UpdateUserCreditLimit(wallet);
+            try
+            {
+                _walletRepository.UpdateUserCreditLimit(wallet);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public async Task CreateWalletAsync(User user)
@@ -78,7 +90,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             {
                 await _walletRepository.CreateWalletAsync(newWallet);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -97,18 +109,18 @@ namespace MultiCreditCard.Wallets.Domain.Services
         {
             return wallet.CreditCards
                             .Where(creditCard => creditCard.CreditLimit > 0)
-                            .OrderByDescending(creditCard => creditCard.PayDay)
-                            .FirstOrDefault();
+                            .OrderByDescending(creditCard => creditCard.PayDay).FirstOrDefault();
         }
 
         private static CreditCard GetNearCardByPayDay(Wallet wallet)
         {
-            var card = (from creditCard in wallet.CreditCards
-                        group creditCard by creditCard.PayDay into grp
-                        select grp.FirstOrDefault(x => x.CreditCardNumber > 0))
-                        .FirstOrDefault();
+            var creditCardResult = CreditCard.DefaultEntity();
 
-            return card;
+            creditCardResult = (from creditCard in wallet.CreditCards
+                                group creditCard by creditCard.PayDay into grp
+                                select grp.FirstOrDefault(x => x.CreditLimit > 0)).FirstOrDefault();
+
+            return creditCardResult;
         }
 
         private void BuyWithMoreThaOneCard(Wallet wallet, CreditCard creditCard, decimal valueBuy)

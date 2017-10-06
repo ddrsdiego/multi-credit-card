@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MultiCreditCard.CreditCards.Domain.Entities;
 
 namespace MultiCreditCard.CreditCards.Domain.Contracts.Repositories
 {
     public interface ICreditCardRepository
     {
-
+        void UpdateCreditCardLimit(CreditCard creditCard);
     }
 }
