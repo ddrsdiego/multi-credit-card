@@ -14,7 +14,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             if (!wallet.CreditCards.Any())
                 throw new InvalidOperationException("Nenhum cartão de crédito na carteira para realizar a compra.");
 
-            if (amount > wallet.MaximumCreditLimit)
+            if (amount > wallet.UserCreditLimit)
                 throw new InvalidOperationException($"Não há saldo suficiente na carteira para realizar a compra.");
 
             var cardForBuy = GetCardForBuy(wallet);
@@ -22,9 +22,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             if (cardForBuy != null && cardForBuy.CreditLimit >= amount)
                 cardForBuy.Debit(amount);
             else
-            {
                 BuyWithMoreThaOneCard(wallet, cardForBuy, amount);
-            }
         }
 
         private static CreditCard GetCardForBuy(Wallet wallet)
