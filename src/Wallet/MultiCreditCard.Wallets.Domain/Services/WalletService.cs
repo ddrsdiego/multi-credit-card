@@ -122,7 +122,14 @@ namespace MultiCreditCard.Wallets.Domain.Services
 
         public async Task<Wallet> GetWalletByUserId(string userId)
         {
-            return await _walletRepository.GetWalletByUserId(userId);
+            try
+            {
+                return await _walletRepository.GetWalletByUserId(userId);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

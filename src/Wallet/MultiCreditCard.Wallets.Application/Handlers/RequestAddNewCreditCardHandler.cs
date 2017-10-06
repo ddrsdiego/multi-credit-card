@@ -35,8 +35,6 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             if (response.HasError)
                 return Task.FromResult(response);
 
-            _wallet.AddNewCreditCart(AdapterCommandToDomain(message, response));
-
             AddNewCreditCart(message, response);
             if (response.HasError)
                 return Task.FromResult(response);
@@ -52,7 +50,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             if (!results.IsValid)
             {
                 results.Errors.ToList().ForEach(x => response.AddError(x.ErrorMessage));
-                return; 
+                return;
             }
 
             VerifyUser(command, response);
@@ -64,21 +62,21 @@ namespace MultiCreditCard.Wallets.Application.Handlers
                 return;
         }
 
-        private async void VerifyUser(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
+        private void VerifyUser(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
-            _user = await _userServices.GetUserByUserId(command.Userid);
-            if (_user == null)
+            _user = _userServices.GetUserByUserId(command.Userid).Result;
+            if (string.IsNullOrEmpty(_user.UserId))
                 response.AddError($"Usuário não localizado encontrado");
         }
 
-        private async void VerifyHasWallet(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
+        private void VerifyHasWallet(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
-            _wallet = await _walletService.GetWalletByUserId(_user.Id);
+            _wallet = _walletService.GetWalletByUserId(_user.UserId).Result;
             if (_wallet == null)
                 response.AddError($"Não há nenhuma carteira para o cliente.");
         }
 
-        private CreditCard AdapterCommandToDomain(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
+        private static CreditCard AdapterCommandToDomain(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
             var newCreditCard = CreditCard.DefaultEntity();
 
@@ -98,6 +96,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
         {
             try
             {
+                _wallet.AddNewCreditCart(AdapterCommandToDomain(command, response));
                 _walletService.AddNewCreditCart(_wallet);
             }
             catch (Exception ex)

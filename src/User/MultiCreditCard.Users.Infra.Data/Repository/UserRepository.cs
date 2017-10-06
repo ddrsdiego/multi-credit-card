@@ -2,9 +2,11 @@
 using Microsoft.Extensions.Configuration;
 using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
+using MultiCreditCard.Users.Domain.ValueObjects;
 using MultiCreditCard.Users.Infra.Data.Statement;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiCreditCard.Users.Infra.Data.Repository
@@ -26,7 +28,7 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
                 {
                     var parameters = new
                     {
-                        UserId = user.Id,
+                        UserId = user.UserId,
                         UserName = user.UserName,
                         DocumentNumber = user.DocumentNumber,
                         Email = user.Email.EletronicAddress,

@@ -12,19 +12,19 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         protected Wallet()
         {
-
         }
 
         public Wallet(User user)
         {
             User = user;
-            _creditCards = new List<CreditCard>();
-            Id = Guid.NewGuid().ToString();
+            WalletId = Guid.NewGuid().ToString();
             CreationDate = DateTime.Now;
         }
 
-        public string Id { get; private set; }
+        public string WalletId { get; private set; }
+
         public decimal AvailableCredit { get; set; }
+
         public decimal MaximumCreditLimit
         {
             get
@@ -32,19 +32,27 @@ namespace MultiCreditCard.Wallets.Domain.Entities
                 return _creditCards.Sum(x => x.CreditLimit);
             }
         }
+
         public decimal UserCreditLimit { get; private set; }
+
         public User User { get; private set; }
+
         public ICollection<CreditCard> CreditCards
         {
             get { return _creditCards; }
-            private set { _creditCards = new List<CreditCard>(value); }
+            set { _creditCards = new List<CreditCard>(value); }
         }
+
         public DateTime CreationDate { get; private set; }
+
         public DateTime UpdateDate { get; set; }
 
         public void AddNewCreditCart(CreditCard newCreditCard)
         {
-            if (_creditCards.Where(x => x.CreditCardNumber == newCreditCard.CreditCardNumber).Any())
+            if (_creditCards == null)
+                _creditCards = new List<CreditCard>();
+
+            if (_creditCards.Any(x => x.CreditCardNumber == newCreditCard.CreditCardNumber && x.CreditCardType == newCreditCard.CreditCardType))
                 throw new InvalidOperationException($"Cartão de Crédito {newCreditCard.CreditCardNumber} já adicionado a carteira.");
 
             UpdateDate = DateTime.Now;
@@ -54,7 +62,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         public void RemoveCreditCard(CreditCard creditCard)
         {
-            if (!_creditCards.Where(x => x.CreditCardNumber == creditCard.CreditCardNumber).Any())
+            if (!_creditCards.Any(x => x.CreditCardNumber == creditCard.CreditCardNumber))
                 throw new InvalidOperationException($"Cartão de Crédito {creditCard.CreditCardNumber} já removido da carteira.");
 
             UpdateDate = DateTime.Now;

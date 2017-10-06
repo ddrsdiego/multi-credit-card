@@ -2,8 +2,8 @@
 {
     public static class UserStatements
     {
-        public const string GetUserByUserId = @"SELECT * FROM USERS WHERE UserId = @userId";
-        public const string GetUserByEmail = @"SELECT UserId FROM USERS WHERE EMAIL = @email";
+        public const string GetUserByUserId = @"SELECT UserId FROM USERS WHERE UserId = @userId";
+        public const string GetUserByEmail = @"SELECT u.UserId, u.Email EletronicAddress FROM USERS u WHERE u.EMAIL = @email";
         public const string Create = @"
                                         INSERT INTO USERS(
 	                                        UserId

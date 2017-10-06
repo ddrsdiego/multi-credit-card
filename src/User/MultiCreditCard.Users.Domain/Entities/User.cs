@@ -7,7 +7,7 @@ namespace MultiCreditCard.Users.Domain.Entities
     {
         protected User()
         {
-
+            Email = new Email();
         }
 
         public User(string userName, decimal documentNumber, Email email, Password password)
@@ -15,7 +15,7 @@ namespace MultiCreditCard.Users.Domain.Entities
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentException(nameof(userName));
 
-            Id = Guid.NewGuid().ToString();
+            UserId = Guid.NewGuid().ToString();
             UserName = userName;
             DocumentNumber = documentNumber;
             Email = email;
@@ -23,11 +23,11 @@ namespace MultiCreditCard.Users.Domain.Entities
             CreationDate = DateTime.Now;
         }
 
-        public string Id { get; private set; }
+        public string UserId { get; private set; }
         public string UserName { get; private set; }
         public decimal DocumentNumber { get; private set; }
-        public Email Email { get; private set; }
-        public Password Password { get; private set; }
+        public Email Email { get; set; }
+        public Password Password { get; set; }
         public DateTime CreationDate { get; private set; }
 
         public static User DefaultEntity() => new User();

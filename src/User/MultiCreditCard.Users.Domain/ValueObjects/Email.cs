@@ -7,6 +7,11 @@ namespace MultiCreditCard.Users.Domain.ValueObjects
     {
         private const string EMAIL_REGEX = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
 
+        public Email()
+        {
+
+        }
+
         public Email(string eletronicAddress)
         {
             if (string.IsNullOrEmpty(eletronicAddress))
@@ -18,6 +23,6 @@ namespace MultiCreditCard.Users.Domain.ValueObjects
             EletronicAddress = eletronicAddress;
         }
 
-        public string EletronicAddress { get; private set; }
+        public string EletronicAddress { get; set; }
     }
 }
