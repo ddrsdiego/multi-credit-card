@@ -1,10 +1,14 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using MultiCreditCard.Infra.IoC;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace MultiCreditCard.Api
 {
@@ -24,6 +28,20 @@ namespace MultiCreditCard.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(jwtBearerOptions => 
+            {
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateActor = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Issuer"],
+                    ValidAudience = Configuration["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["SigningKey"]))
+                };
+            });
+
             services.AddMvc();
             services.AddMediatR(typeof(Startup));
             services.RegisterRepositories();
@@ -39,7 +57,9 @@ namespace MultiCreditCard.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseMvc();
+
             app.Run(async context =>
             {
                 await context.Response.WriteAsync("Multi Credit Cast is online");

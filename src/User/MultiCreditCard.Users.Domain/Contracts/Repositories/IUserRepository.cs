@@ -8,5 +8,6 @@ namespace MultiCreditCard.Users.Domain.Contracts.Repositories
         Task CreateAsync(User user);
         Task<User> GetUserByUserId(string userId);
         Task<User> GetUserByEmail(string email);
+        Task<User> GetUserFromCredentials(string email, string password);
     }
 }

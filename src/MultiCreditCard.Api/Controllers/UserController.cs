@@ -31,5 +31,20 @@ namespace MultiCreditCard.Api.Controllers
 
             return Created("", command);
         }
+
+        public async Task<IActionResult> AuthenticationUser([FromBody]AuthenticationUserCommand command)
+        {
+            if (command == null)
+            {
+                return BadRequest();
+            }
+
+            var response = await _mediator.Send(command);
+
+            if (response.HasError)
+                return BadRequest(new { errors = response.Errors.Select(x => x) });
+
+            return Ok();
+        }
     }
 }
