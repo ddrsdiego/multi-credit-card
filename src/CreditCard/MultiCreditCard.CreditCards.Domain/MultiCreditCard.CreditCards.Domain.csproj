@@ -10,4 +10,8 @@
     <None Remove="ValueObjects\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\User\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

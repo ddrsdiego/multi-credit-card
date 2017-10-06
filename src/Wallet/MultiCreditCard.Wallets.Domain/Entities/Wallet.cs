@@ -16,6 +16,8 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         public Wallet(User user)
         {
+            _creditCards = new List<CreditCard>();
+
             User = user;
             WalletId = Guid.NewGuid().ToString();
             CreationDate = DateTime.Now;
@@ -35,7 +37,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         public decimal UserCreditLimit { get; private set; }
 
-        public User User { get; private set; }
+        public User User { get; set; }
 
         public ICollection<CreditCard> CreditCards
         {
@@ -53,7 +55,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
                 _creditCards = new List<CreditCard>();
 
             if (_creditCards.Any(x => x.CreditCardNumber == newCreditCard.CreditCardNumber && x.CreditCardType == newCreditCard.CreditCardType))
-                throw new InvalidOperationException($"Cartão de Crédito {newCreditCard.CreditCardNumber} já adicionado a carteira.");
+                throw new InvalidOperationException($"Cartão de Crédito {newCreditCard.CreditCardType} - {newCreditCard.CreditCardNumber} já adicionado a carteira.");
 
             UpdateDate = DateTime.Now;
             _creditCards.Add(newCreditCard);

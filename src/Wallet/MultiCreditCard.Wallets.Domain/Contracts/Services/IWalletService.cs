@@ -11,11 +11,5 @@ namespace MultiCreditCard.Wallets.Domain.Contracts.Services
         Task<Wallet> GetWalletByUserId(string userId);
 
         Task CreateWalletAsync(User user);
-
-        void AddNewCreditCart(Wallet wallet);
-
-        void RemoveCreditCart(Wallet wallet);
-
-        void UpdateUserCreditLimit(Wallet wallet);
     }
 }

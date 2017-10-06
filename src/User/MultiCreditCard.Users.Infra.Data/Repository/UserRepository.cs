@@ -30,8 +30,8 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
                         UserId = user.UserId,
                         UserName = user.UserName,
                         DocumentNumber = user.DocumentNumber,
-                        Email = user.Email.EletronicAddress,
-                        Password = user.Password.Encoded,
+                        Email = user.Email,
+                        Password = user.Password,
                         CreationDate = user.CreationDate
                     };
                     await conn.ExecuteAsync(UserStatements.Create, parameters);

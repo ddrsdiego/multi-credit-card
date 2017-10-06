@@ -2,9 +2,9 @@
 using MultiCreditCard.Application.Common;
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Validators;
-using MultiCreditCard.Users.Domain.Contracts.Services;
+using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
-using MultiCreditCard.Wallets.Domain.Contracts.Services;
+using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
 using MultiCreditCard.Wallets.Domain.Entities;
 using System;
 using System.Linq;
@@ -17,14 +17,15 @@ namespace MultiCreditCard.Users.Command.Handlers
         private User _user;
         private Wallet _wallet;
 
-        private readonly IUserServices _userService;
-        private readonly IWalletService _walletService;
+        private readonly IUserRepository _userRepository;
+        private readonly IWalletRepository _walletRepository;
+
         private readonly RequestUpdateUserCreditLimitValidator _validator;
 
-        public RequestUpdateUserCreditLimitHandler(IWalletService walletService, IUserServices userService)
+        public RequestUpdateUserCreditLimitHandler(IUserRepository userRepository, IWalletRepository walletRepository)
         {
-            _walletService = walletService;
-            _userService = userService;
+            _userRepository = userRepository;
+            _walletRepository = walletRepository;
             _validator = new RequestUpdateUserCreditLimitValidator();
         }
 
@@ -65,7 +66,7 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             try
             {
-                _user = _userService.GetUserByUserId(command.UserId).Result;
+                _user = _userRepository.GetUserByUserId(command.UserId).Result;
                 if (string.IsNullOrEmpty(_user.UserId))
                     response.AddError($"Usuário não localizado encontrado");
             }
@@ -79,7 +80,7 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             try
             {
-                _wallet = _walletService.GetWalletByUserId(_user.UserId).Result;
+                _wallet = _walletRepository.GetWalletByUserId(_user.UserId).Result;
                 if (_wallet == null)
                     response.AddError($"Não há nenhuma carteira para o cliente.");
             }
@@ -94,7 +95,7 @@ namespace MultiCreditCard.Users.Command.Handlers
             try
             {
                 _wallet.UpdateUserCreditLimit(command.NewCreditLimit);
-                _walletService.UpdateUserCreditLimit(_wallet);
+                _walletRepository.UpdateUserCreditLimit(_wallet);
             }
             catch (Exception ex)
             {

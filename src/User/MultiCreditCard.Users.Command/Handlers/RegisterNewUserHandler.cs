@@ -2,7 +2,7 @@
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
 using MultiCreditCard.Users.Command.Validators;
-using MultiCreditCard.Users.Domain.Contracts.Services;
+using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Users.Domain.ValueObjects;
 using MultiCreditCard.Wallets.Domain.Contracts.Services;
@@ -14,14 +14,14 @@ namespace MultiCreditCard.Users.Command.Handlers
 {
     public class RegisterNewUserHandler : IAsyncRequestHandler<RegisterNewUserCommand, RegisterNewUserReponse>
     {
-        private readonly IUserServices _userServices;
         private readonly IWalletService _walletService;
+        private readonly IUserRepository _userRepository;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
 
-        public RegisterNewUserHandler(IUserServices userServices, IWalletService walletService)
+        public RegisterNewUserHandler(IUserRepository userRepository, IWalletService walletService)
         {
-            _userServices = userServices;
             _walletService = walletService;
+            _userRepository = userRepository;
         }
 
         public Task<RegisterNewUserReponse> Handle(RegisterNewUserCommand message)
@@ -50,9 +50,9 @@ namespace MultiCreditCard.Users.Command.Handlers
                 return;
             }
 
-            var user = _userServices.GetUserByEmail(command.Email).Result;
+            var user = _userRepository.GetUserByEmail(command.Email).Result;
             if (user != null)
-                response.AddError($"Usuário ja criado para o email {user.Email.EletronicAddress}");
+                response.AddError($"Usuário ja criado para o email {user.Email}");
         }
 
         private async void RegisterNewUser(RegisterNewUserCommand command, RegisterNewUserReponse response)
@@ -63,7 +63,7 @@ namespace MultiCreditCard.Users.Command.Handlers
                 if (response.HasError)
                     return;
 
-                await _userServices.CreateUserAsync(newUser);
+                await _userRepository.CreateAsync(newUser);
                 await _walletService.CreateWalletAsync(newUser);
             }
             catch (Exception ex)
@@ -81,7 +81,7 @@ namespace MultiCreditCard.Users.Command.Handlers
                 var email = new Email(command.Email);
                 var password = new Password(command.Password);
 
-                newUser = new User(command.UserName, command.DocumentNumber, email, password);
+                newUser = new User(command.UserName, command.DocumentNumber, email.EletronicAddress, password.Encoded);
             }
             catch (Exception ex)
             {

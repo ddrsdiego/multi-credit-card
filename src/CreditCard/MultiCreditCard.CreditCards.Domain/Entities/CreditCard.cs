@@ -1,4 +1,5 @@
 ﻿using MultiCreditCard.CreditCards.Domain.Enums;
+using MultiCreditCard.Users.Domain.Entities;
 using System;
 
 namespace MultiCreditCard.CreditCards.Domain.Entities
@@ -10,8 +11,9 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
 
         }
 
-        public CreditCard(CreditCardType creditCardType, decimal creditCardNumber, string printedName, string expirationDate, int payDay, string cvv, decimal creditLimit)
+        public CreditCard(User user, CreditCardType creditCardType, decimal creditCardNumber, string printedName, string expirationDate, int payDay, string cvv, decimal creditLimit)
         {
+            User = user;
             CreditCardType = creditCardType;
             CreditCardNumber = creditCardNumber;
             PrintedName = printedName;
@@ -24,6 +26,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
 
         public static CreditCard DefaultEntity() => new CreditCard();
 
+        public User User { get; set; }
         public decimal CreditCardNumber { get; private set; }
         public string PrintedName { get; private set; }
         public int PayDay { get; private set; }

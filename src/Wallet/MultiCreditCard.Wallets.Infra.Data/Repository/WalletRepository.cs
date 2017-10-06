@@ -1,11 +1,11 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
 using MultiCreditCard.CreditCards.Domain.Entities;
+using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
 using MultiCreditCard.Wallets.Domain.Entities;
 using MultiCreditCard.Wallets.Infra.Data.Statement;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +40,7 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
         {
             var parameters = new
             {
+                userId = creditCard.User.UserId,
                 creditCardNumber = creditCard.CreditCardNumber,
                 creditCardType = (int)creditCard.CreditCardType,
                 printedName = creditCard.PrintedName,
@@ -63,8 +64,6 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
                     {
                         WalletId = wallet.WalletId,
                         UserId = wallet.User.UserId,
-                        AvailableCredit = wallet.AvailableCredit,
-                        MaximumCreditLimit = wallet.MaximumCreditLimit,
                         UserCreditLimit = wallet.UserCreditLimit,
                         CreationDate = wallet.CreationDate,
                     };
@@ -84,26 +83,22 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
 
             using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
             {
-                var walletDictionary = new Dictionary<string, Wallet>();
+                using (var multi = conn.QueryMultiple(WalletStatement.GetWalletByUserId + WalletStatement.GetUserByUserId + WalletStatement.GetCreditCardByUserId, new { userId = userId }))
+                {
+                    walletResult = multi.Read<Wallet>().First();
 
-                walletResult = conn.Query<Wallet, CreditCard, Wallet>(WalletStatement.GetWalletByUserId,
-                    (wallet, creditCard) =>
+                    var user = multi.Read<User>().First();
+                    var creditCards = multi.Read<CreditCard>().ToList();
+
+                    if (creditCards != null && creditCards.Any())
                     {
-                        Wallet walletEntry;
-
-                        if (!walletDictionary.TryGetValue(wallet.WalletId, out walletEntry))
+                        creditCards.ForEach(c => 
                         {
-                            walletEntry = wallet;
-                            walletEntry.CreditCards = new List<CreditCard>();
-                            walletDictionary.Add(walletEntry.WalletId, walletEntry);
-                        }
-                        if (creditCard != null)
-                            walletEntry.CreditCards.Add(creditCard);
-
-                        return walletEntry;
-                    },
-                    new { UserId = userId },
-                    splitOn: "CreditCardNumber").FirstOrDefault();
+                            c.User = user;
+                            walletResult.AddNewCreditCart(c);
+                        });
+                    }
+                }
             }
 
             return walletResult;

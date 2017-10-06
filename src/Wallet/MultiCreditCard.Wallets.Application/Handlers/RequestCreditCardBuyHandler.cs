@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using MultiCreditCard.Users.Domain.Contracts.Services;
+using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Application.Commands;
 using MultiCreditCard.Wallets.Application.Reponse;
@@ -17,13 +17,15 @@ namespace MultiCreditCard.Wallets.Application.Handlers
     {
         private User _user;
         private Wallet _wallet;
-        private readonly IUserServices _userService;
+
         private readonly IWalletService _walletService;
+        private readonly IUserRepository _userRepository;
+
         private readonly RequestCreditCardBuyValidator _validator = new RequestCreditCardBuyValidator();
 
-        public RequestCreditCardBuyHandler(IUserServices userService, IWalletService walletService)
+        public RequestCreditCardBuyHandler(IUserRepository userRepository, IWalletService walletService)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _walletService = walletService;
         }
 
@@ -64,7 +66,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
         {
             try
             {
-                _user = _userService.GetUserByUserId(command.UserId).Result;
+                _user = _userRepository.GetUserByUserId(command.UserId).Result;
                 if (string.IsNullOrEmpty(_user.UserId))
                     response.AddError($"Usuário não localizado encontrado");
             }
