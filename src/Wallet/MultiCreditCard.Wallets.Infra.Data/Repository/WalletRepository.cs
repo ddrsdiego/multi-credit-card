@@ -14,22 +14,18 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
 {
     public class WalletRepository : IWalletRepository
     {
-        private readonly IConfiguration _configuracoes;
+        private readonly IConfiguration _config;
 
         public WalletRepository(IConfiguration configuracoes)
         {
-            _configuracoes = configuracoes;
+            _config = configuracoes;
         }
 
-        public void AddNewCreditCart(Wallet wallet)
+        public void AddNewCreditCart(Wallet wallet, CreditCard creditCard)
         {
-            using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
+            using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
             {
-                wallet.CreditCards.ToList().ForEach(creditCard =>
-                {
-                    CreateNewCreditCard(creditCard, conn);
-                    conn.Execute(WalletStatement.AddNewCreditCart, new { walletId = wallet.WalletId, creditCardNumber = creditCard.CreditCardNumber });
-                });
+                conn.Execute(WalletStatement.AddNewCreditCart, new { walletId = wallet.WalletId, creditCardNumber = creditCard.CreditCardNumber });
 
                 var userCreditLimit = wallet.CreditCards.Sum(x => x.CreditLimit);
                 conn.Execute("UPDATE WALLETS SET UserCreditLimit = @userCreditLimit, UpdateDate = GETDATE() where WalletId = @WalletId", new { userCreditLimit = userCreditLimit, walletId = wallet.WalletId });
@@ -48,7 +44,8 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
                 expirationDate = creditCard.ExpirationDate,
                 creditLimit = creditCard.CreditLimit,
                 cVV = creditCard.CVV,
-                createDate = creditCard.CreateDate
+                createDate = creditCard.CreateDate,
+                Enable = creditCard.Enable
             };
 
             conn.Execute(WalletStatement.CreateNewCreditCard, parameters);
@@ -58,7 +55,7 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
+                using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
                 {
                     var parameter = new
                     {
@@ -81,23 +78,25 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
         {
             var walletResult = Wallet.DefaultEntity();
 
-            using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
+            using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
             {
-                using (var multi = conn.QueryMultiple(WalletStatement.GetWalletByUserId + WalletStatement.GetUserByUserId + WalletStatement.GetCreditCardByUserId, new { userId = userId }))
+                using (var multi = await conn.QueryMultipleAsync(WalletStatement.GetWalletByUserId, new { userId = userId }))
                 {
-                    walletResult = multi.Read<Wallet>().First();
-
                     var user = multi.Read<User>().First();
+                    var wallet = walletResult = multi.Read<Wallet>().First();
                     var creditCards = multi.Read<CreditCard>().ToList();
 
                     if (creditCards != null && creditCards.Any())
                     {
-                        creditCards.ForEach(c => 
+                        creditCards.ForEach(c =>
                         {
                             c.User = user;
-                            walletResult.AddNewCreditCart(c);
+                            wallet.AddNewCreditCart(c);
                         });
                     }
+
+                    wallet.User = user;
+                    walletResult = wallet;
                 }
             }
 
@@ -113,7 +112,7 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
         {
             try
             {
-                using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
+                using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
                 {
                     var parameters = new
                     {

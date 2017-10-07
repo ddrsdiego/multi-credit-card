@@ -22,6 +22,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
             CreditLimit = creditLimit;
             PayDay = payDay;
             CreateDate = DateTime.Now;
+            Enable = true;
         }
 
         public static CreditCard DefaultEntity() => new CreditCard();
@@ -36,7 +37,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
         public string CVV { get; private set; }
         public CreditCardType CreditCardType { get; private set; }
         public DateTime CreateDate { get; private set; }
-
+        public bool Enable { get; private set; }
 
         public void Debit(decimal value)
         {

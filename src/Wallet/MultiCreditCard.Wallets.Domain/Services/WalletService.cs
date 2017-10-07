@@ -20,6 +20,28 @@ namespace MultiCreditCard.Wallets.Domain.Services
             _creditCardRepository = creditCardRepository;
         }
 
+        public void AddNewCreditCart(Wallet wallet)
+        {
+            try
+            {
+                if (wallet == null)
+                    throw new ArgumentNullException(nameof(wallet));
+
+                if (wallet.CreditCards == null || !wallet.CreditCards.Any())
+                    throw new ArgumentNullException(nameof(wallet.CreditCards));
+
+                wallet.CreditCards.ToList().ForEach(creditCard =>
+                {
+                    _creditCardRepository.Create(creditCard);
+                    _walletRepository.AddNewCreditCart(wallet, creditCard);
+                });
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         public void Buy(Wallet wallet)
         {
             wallet.CreditCards.ToList().ForEach(creditCard =>

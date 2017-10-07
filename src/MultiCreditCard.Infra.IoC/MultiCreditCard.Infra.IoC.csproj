@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Wallet\MultiCreditCard.Wallets.Infra.Data\MultiCreditCard.Wallets.Infra.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Logging">
+      <HintPath>..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.logging\2.0.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

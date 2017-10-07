@@ -14,7 +14,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
             if (!wallet.CreditCards.Any())
                 throw new InvalidOperationException("Nenhum cartão de crédito na carteira para realizar a compra.");
 
-            if (amount > wallet.UserCreditLimit)
+            if (amount > wallet.MaximumCreditLimit)
                 throw new InvalidOperationException($"Não há saldo suficiente na carteira para realizar a compra.");
 
             var cardForBuy = GetCardForBuy(wallet);
@@ -47,7 +47,7 @@ namespace MultiCreditCard.Wallets.Domain.Services
 
             creditCardResult = (from creditCard in wallet.CreditCards
                                 where creditCard.CreditLimit > 0
-                                orderby creditCard.PayDay ascending
+                                orderby creditCard.PayDay descending
                                 group creditCard by creditCard.PayDay into grp
                                 select grp.FirstOrDefault()).FirstOrDefault();
 

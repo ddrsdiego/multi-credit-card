@@ -5,6 +5,7 @@ VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CCC1795-2163-439A-80B9-01A98BFF43B7}"
 	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
@@ -70,11 +71,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CreditCard", "CreditCard", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.CreditCards.Infra.Data", "MultiCreditCard.CreditCards.Infra.Data\MultiCreditCard.CreditCards.Infra.Data.csproj", "{7B9FD1B4-1030-425F-82D9-FB7E340064DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Infra.Data.SqlServer", "MultiCreditCard.Infra.Data.SqlServer\MultiCreditCard.Infra.Data.SqlServer.csproj", "{3D6F3833-4028-4DAD-B91F-62D6E0EB4425}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.Infra.Data.SqlServer", "MultiCreditCard.Infra.Data.SqlServer\MultiCreditCard.Infra.Data.SqlServer.csproj", "{3D6F3833-4028-4DAD-B91F-62D6E0EB4425}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{61B221E8-FBED-443D-8C26-78AF751B7D13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoC", "IoC", "{92F4D513-13F7-433A-ADFC-F929097FCF03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Log", "Log", "{83985F83-20F1-4FFE-98D9-978680FDA561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Infra.Log", "MultiCreditCard.Infra.Log\MultiCreditCard.Infra.Log.csproj", "{5ADC3B03-F86D-422B-9C1C-5936227E1008}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -150,6 +155,10 @@ Global
 		{3D6F3833-4028-4DAD-B91F-62D6E0EB4425}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D6F3833-4028-4DAD-B91F-62D6E0EB4425}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D6F3833-4028-4DAD-B91F-62D6E0EB4425}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ADC3B03-F86D-422B-9C1C-5936227E1008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ADC3B03-F86D-422B-9C1C-5936227E1008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ADC3B03-F86D-422B-9C1C-5936227E1008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ADC3B03-F86D-422B-9C1C-5936227E1008}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,6 +194,8 @@ Global
 		{3D6F3833-4028-4DAD-B91F-62D6E0EB4425} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
 		{61B221E8-FBED-443D-8C26-78AF751B7D13} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
 		{92F4D513-13F7-433A-ADFC-F929097FCF03} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
+		{83985F83-20F1-4FFE-98D9-978680FDA561} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
+		{5ADC3B03-F86D-422B-9C1C-5936227E1008} = {83985F83-20F1-4FFE-98D9-978680FDA561}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {983DF906-986C-4DC1-9980-19B95A82D260}

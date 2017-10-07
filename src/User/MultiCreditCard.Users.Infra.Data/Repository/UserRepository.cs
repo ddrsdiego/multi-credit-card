@@ -50,13 +50,16 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
             {
                 using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
                 {
-                    user = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByEmail, new { email = email });
+                    var result = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByEmail, new { email = email });
+
+                    if (result != null)
+                        user = result;
                 }
                 return user;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Erro ao obter o usuário pelo email {email}. {ex.Message}");
+                throw new InvalidOperationException($"Erro ao consultar o usuário pelo email {email}. {ex.Message}");
             }
         }
 
@@ -68,13 +71,16 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
             {
                 using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
                 {
-                    userResult = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByUserId, new { userId = userId });
+                    var result = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserByUserId, new { userId = userId });
+
+                    if (result != null)
+                        userResult = result;
                 }
                 return userResult;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Erro ao obter o usuário pelo id {userId}. {ex.Message}");
+                throw new InvalidOperationException($"Erro ao consultar o usuário pelo id {userId}. {ex.Message}");
             }
         }
 
@@ -86,14 +92,17 @@ namespace MultiCreditCard.Users.Infra.Data.Repository
             {
                 using (SqlConnection conn = new SqlConnection(_configuracoes.GetConnectionString("MultCreditCard")))
                 {
-                    var parameters = new { email = email, password = password };
-                    userResult = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserFromCredentials, parameters);
+                    var result = await conn.QueryFirstOrDefaultAsync<User>(UserStatements.GetUserFromCredentials, new { email = email, password = password });
+
+                    if (result != null)
+                        userResult = result;
                 }
+
                 return userResult;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException($"Erro ao obter o usuário para autenticação pelo email {email}. {ex.Message}");
+                throw new InvalidOperationException($"Erro ao consultar o usuário para autenticação pelo email {email}. {ex.Message}");
             }
         }
     }

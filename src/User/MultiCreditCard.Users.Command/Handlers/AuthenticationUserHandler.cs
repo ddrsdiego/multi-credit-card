@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
@@ -16,11 +17,14 @@ namespace MultiCreditCard.Users.Command.Handlers
     public class AuthenticationUserHandler : IAsyncRequestHandler<AuthenticationUserCommand, AuthenticationUserResponse>
     {
         private User _user = User.DefaultEntity();
+
+        private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
 
-        public AuthenticationUserHandler(IUserRepository userRepository)
+        public AuthenticationUserHandler(IUserRepository userRepository, ILoggerFactory loggerFactory)
         {
             _userRepository = userRepository;
+            _logger = loggerFactory.CreateLogger<AuthenticationUserHandler>();
         }
 
         public async Task<AuthenticationUserResponse> Handle(AuthenticationUserCommand message)
@@ -45,16 +49,13 @@ namespace MultiCreditCard.Users.Command.Handlers
             _user = _userRepository.GetUserFromCredentials(command.Email, command.Password).Result;
             if (string.IsNullOrEmpty(_user.UserId))
             {
-                response.AddError("Usuário não localizado.");
+                response.AddError($"Usuário com o email {command.Email} não localizado.");
                 return;
             }
         }
 
         private async Task<JwtSecurityToken> GetJwtSecurityToken(User user)
         {
-            //var userClaims = await _userManager.GetClaimsAsync(user);
-            //claims: GetTokenClaims(user).Union(userClaims),
-
             return new JwtSecurityToken(
                 issuer: "http://api.multicreditcard.com.br",
                 audience: "http://api.multicreditcard.com.br",
@@ -68,8 +69,9 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             return new List<Claim>
             {
+                new Claim("access_token", user.UserId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Sub, user.Email)
+                new Claim(JwtRegisteredClaimNames.Email, user.Email)
             };
         }
 

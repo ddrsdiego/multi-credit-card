@@ -24,6 +24,8 @@ namespace MultiCreditCard.Api.Controllers
             if (command == null)
                 return BadRequest();
 
+            command.UserId = User.FindFirst("access_token")?.Value;
+
             var response = await _mediator.Send(command);
             if (response.HasError)
                 return BadRequest(new { errors = response.Errors.Select(x => x) });

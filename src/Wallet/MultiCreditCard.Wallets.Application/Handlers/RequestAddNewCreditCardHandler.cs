@@ -6,6 +6,7 @@ using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
 using MultiCreditCard.Wallets.Application.Validators;
 using MultiCreditCard.Wallets.Domain.Contracts.Repositories;
+using MultiCreditCard.Wallets.Domain.Contracts.Services;
 using MultiCreditCard.Wallets.Domain.Entities;
 using System;
 using System.Linq;
@@ -18,13 +19,15 @@ namespace MultiCreditCard.Wallets.Application.Handlers
         private User _user;
         private Wallet _wallet;
 
+        private readonly IWalletService _walletService;
         private readonly IUserRepository _userRepository;
         private readonly IWalletRepository _walletRepository;
 
         private readonly RequestAddNewCreditCardValidator validator = new RequestAddNewCreditCardValidator();
 
-        public RequestAddNewCreditCardHandler(IUserRepository userRepository, IWalletRepository walletRepository)
+        public RequestAddNewCreditCardHandler(IUserRepository userRepository, IWalletRepository walletRepository, IWalletService walletService)
         {
+            _walletService = walletService;
             _userRepository = userRepository;
             _walletRepository = walletRepository;
         }
@@ -66,7 +69,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
 
         private void VerifyUser(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
-            _user = _userRepository.GetUserByUserId(command.Userid).Result;
+            _user = _userRepository.GetUserByUserId(command.UserId).Result;
             if (string.IsNullOrEmpty(_user.UserId))
                 response.AddError($"Usuário não localizado encontrado");
         }
@@ -88,7 +91,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             }
             catch (Exception ex)
             {
-                response.AddError($"Não há nenhuma carteira para o cliente.");
+                response.AddError($"Erro ao criar o cartão de crédito. {ex.Message}");
             }
 
             return newCreditCard;
@@ -99,7 +102,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             try
             {
                 _wallet.AddNewCreditCart(AdapterCommandToDomain(command, response));
-                _walletRepository.AddNewCreditCart(_wallet);
+                _walletService.AddNewCreditCart(_wallet);
             }
             catch (Exception ex)
             {

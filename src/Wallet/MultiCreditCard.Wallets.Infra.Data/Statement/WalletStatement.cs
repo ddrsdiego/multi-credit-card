@@ -16,21 +16,14 @@
 	                                            ,@CreationDate
                                             )";
 
-        //public const string GetWalletByUserId = @"
-        //                                            SELECT *
-        //                                            FROM WALLETS wallet WITH(NOLOCK)
-        //                                             LEFT JOIN WALLTES_CREDITCARDS WITH(NOLOCK)
-        //                                              ON WALLTES_CREDITCARDS.WalletId = wallet.WalletId
-        //                                             LEFT JOIN CREDITCARDS creditCard WITH(NOLOCK)
-        //                                              ON creditCard.CreditCardNumber = WALLTES_CREDITCARDS.CreditCardNumber
-        //                                                    AND creditCard.UserId = wallet.UserId
-        //                                             INNER JOIN USERS [user]
-        //                                              ON [user].UserId = wallet.UserId
-        //                                            WHERE ( wallet.UserId = @UserId )";
+        public const string GetUserByUserId = @"SELECT * FROM USERS WITH(NOLOCK) WHERE USERID = @userId;";
+        //public const string GetWalletByUserId = @"SELECT * FROM WALLETS WITH(NOLOCK) WHERE USERID = @userId;";
+        public const string GetCreditCardByUserId = @"SELECT * FROM CREDITCARDS WITH(NOLOCK) WHERE USERID = @userId AND ENABLE = 1;";
 
-        public const string GetUserByUserId = @"SELECT USERID FROM USERS WHERE USERID = @userId;";
-        public const string GetWalletByUserId = @"SELECT * FROM WALLETS WHERE USERID = @userId;";
-        public const string GetCreditCardByUserId = @"SELECT * FROM CREDITCARDS WHERE USERID = @userId;";
+        public const string GetWalletByUserId = @"
+                                                    SELECT * FROM USERS WITH(NOLOCK) WHERE USERID = @userId;
+                                                    SELECT * FROM WALLETS WITH(NOLOCK) WHERE USERID = @userId;
+                                                    SELECT * FROM CREDITCARDS WITH(NOLOCK) WHERE USERID = @userId AND ENABLE = 1;";
 
         public const string UpdateUserCreditLimit = @"UPDATE WALLETS SET UserCreditLimit = @UserCreditLimit WHERE WalletId = @WalletId";
 

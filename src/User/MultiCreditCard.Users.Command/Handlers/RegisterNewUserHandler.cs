@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
 using MultiCreditCard.Users.Command.Validators;
@@ -15,14 +16,17 @@ namespace MultiCreditCard.Users.Command.Handlers
     public class RegisterNewUserHandler : IAsyncRequestHandler<RegisterNewUserCommand, RegisterNewUserReponse>
     {
         private User _newUser = User.DefaultEntity();
+        private readonly ILogger _logger;
         private readonly IWalletService _walletService;
         private readonly IUserRepository _userRepository;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
 
-        public RegisterNewUserHandler(IUserRepository userRepository, IWalletService walletService)
+        public RegisterNewUserHandler(IUserRepository userRepository, IWalletService walletService, ILoggerFactory loggerFactory)
         {
             _walletService = walletService;
             _userRepository = userRepository;
+            _logger = loggerFactory.CreateLogger<RegisterNewUserHandler>();
+
         }
 
         public async Task<RegisterNewUserReponse> Handle(RegisterNewUserCommand message)
@@ -56,7 +60,7 @@ namespace MultiCreditCard.Users.Command.Handlers
             }
 
             var user = _userRepository.GetUserByEmail(command.Email).Result;
-            if (user != null)
+            if (!string.IsNullOrEmpty(user.UserId))
                 response.AddError($"Usuário ja criado para o email {user.Email}");
         }
 
@@ -70,10 +74,15 @@ namespace MultiCreditCard.Users.Command.Handlers
 
                 await _userRepository.CreateAsync(_newUser);
                 await _walletService.CreateWalletAsync(_newUser);
+
+                _logger.LogInformation($"Usuário {_newUser.UserName}, email {_newUser.Email}, documento {_newUser.DocumentNumber} registrado com sucesso.");
             }
             catch (Exception ex)
             {
-                response.AddError($"Problemas ao salvar o usuário {command.UserName} - {ex.Message}");
+                var message = $"Problemas ao salvar o usuário {command.UserName} - {ex.Message}";
+
+                _logger.LogError(ex, message);
+                response.AddError(message);
             }
         }
 
