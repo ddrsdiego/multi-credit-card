@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiCreditCard.Users.Application.Commands;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace MultiCreditCard.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddNewCreditCard([FromBody] RequestAddNewCreditCardCommand command)
         {
             if (command == null)

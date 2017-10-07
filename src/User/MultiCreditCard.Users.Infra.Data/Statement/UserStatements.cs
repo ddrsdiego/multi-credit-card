@@ -2,8 +2,7 @@
 {
     public static class UserStatements
     {
-        public const string GetUserFromCredentials= @"SELECT USERID, EMAIL, PASSWORD FROM USERS WHERE EMAIL = @email AND PASSWORD = @password";
-
+        public const string GetUserFromCredentials= @"SELECT USERID, EMAIL, PASSWORD, USERNAME FROM USERS WITH(NOLOCK) WHERE EMAIL = @email AND PASSWORD = @password";
         public const string GetUserByUserId = @"SELECT UserId FROM USERS WHERE UserId = @userId";
         public const string GetUserByEmail = @"SELECT u.UserId, u.Email EletronicAddress FROM USERS u WHERE u.EMAIL = @email";
         public const string Create = @"

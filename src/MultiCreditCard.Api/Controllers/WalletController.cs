@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Wallets.Application.Commands;
@@ -18,6 +19,7 @@ namespace MultiCreditCard.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("buy")]
         public async Task<IActionResult> RequestCreditCardBuy([FromBody] RequestCreditCardBuyCommand command)
         {
@@ -33,6 +35,7 @@ namespace MultiCreditCard.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         [Route("update-limit")]
         public async Task<IActionResult> RequestUpdateUserCreditLimit([FromBody] RequestUpdateUserCreditLimitCommand command)
         {

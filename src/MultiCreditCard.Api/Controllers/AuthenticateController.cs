@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace MultiCreditCard.Api.Controllers
 {
-    [Route("api/users")]
-    public class UserController : Controller
+    [Route("api/authenticate")]
+    public class AuthenticateController : Controller
     {
         private readonly IMediator _mediator;
 
-        public UserController(IMediator mediator)
+        public AuthenticateController(IMediator mediator)
         {
             _mediator = mediator;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterNewUser([FromBody]RegisterNewUserCommand command)
+        public async Task<IActionResult> AuthenticationUser([FromBody]AuthenticationUserCommand command)
         {
             if (command == null)
             {
@@ -31,12 +31,12 @@ namespace MultiCreditCard.Api.Controllers
             if (response.HasError)
                 return BadRequest(new { errors = response.Errors.Select(x => x) });
 
-            return Created("", new
+            return Ok(new
             {
                 response.UserId,
-                response.UserName,
                 response.Email,
-                response.DocumentNumber
+                response.Token,
+                response.Expiration
             });
         }
     }

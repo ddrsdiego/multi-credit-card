@@ -48,7 +48,7 @@
                                                     END";
 
         public const string CreateNewCreditCard = @"
-                                                    IF NOT EXISTS(SELECT 1 FROM CREDITCARDS WHERE CreditCardNumber = @creditCardNumber AND CreditCardType = @creditCardType)
+                                                    IF NOT EXISTS(SELECT 1 FROM CREDITCARDS WHERE CreditCardNumber = @creditCardNumber AND CreditCardType = @creditCardType AND UserId = @userId)
                                                     BEGIN
 	                                                    INSERT INTO CREDITCARDS(
 		                                                    CreditCardNumber

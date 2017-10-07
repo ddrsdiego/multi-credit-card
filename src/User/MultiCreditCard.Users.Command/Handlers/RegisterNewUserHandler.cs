@@ -14,6 +14,7 @@ namespace MultiCreditCard.Users.Command.Handlers
 {
     public class RegisterNewUserHandler : IAsyncRequestHandler<RegisterNewUserCommand, RegisterNewUserReponse>
     {
+        private User _newUser = User.DefaultEntity();
         private readonly IWalletService _walletService;
         private readonly IUserRepository _userRepository;
         private readonly RegisterNewUserValidator validator = new RegisterNewUserValidator();
@@ -24,19 +25,23 @@ namespace MultiCreditCard.Users.Command.Handlers
             _userRepository = userRepository;
         }
 
-        public Task<RegisterNewUserReponse> Handle(RegisterNewUserCommand message)
+        public async Task<RegisterNewUserReponse> Handle(RegisterNewUserCommand message)
         {
             var response = message.Response;
 
             ValidateCommand(message, response);
             if (response.HasError)
-                return Task.FromResult(response);
+                return response;
 
             RegisterNewUser(message, response);
             if (response.HasError)
-                return Task.FromResult(response);
+                return response;
 
-            return Task.FromResult(response);
+            GetResponse(message, response);
+            if (response.HasError)
+                return response;
+
+            return response;
         }
 
         private void ValidateCommand(RegisterNewUserCommand command, RegisterNewUserReponse response)
@@ -59,12 +64,12 @@ namespace MultiCreditCard.Users.Command.Handlers
         {
             try
             {
-                var newUser = AdapterCommantToEntity(command, response);
+                _newUser = AdapterCommantToEntity(command, response);
                 if (response.HasError)
                     return;
 
-                await _userRepository.CreateAsync(newUser);
-                await _walletService.CreateWalletAsync(newUser);
+                await _userRepository.CreateAsync(_newUser);
+                await _walletService.CreateWalletAsync(_newUser);
             }
             catch (Exception ex)
             {
@@ -89,6 +94,21 @@ namespace MultiCreditCard.Users.Command.Handlers
             }
 
             return newUser;
+        }
+
+        private void GetResponse(RegisterNewUserCommand command, RegisterNewUserReponse response)
+        {
+            try
+            {
+                response.UserId = _newUser.UserId;
+                response.UserName = _newUser.UserName;
+                response.Email = _newUser.Email;
+                response.DocumentNumber = _newUser.DocumentNumber;
+            }
+            catch (Exception ex)
+            {
+                response.AddError($"Problemas a criar usuário. {ex.Message}");
+            }
         }
     }
 }
