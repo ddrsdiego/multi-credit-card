@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MultiCreditCard.Application.Common;
 using MultiCreditCard.Users.Command.Commands;
 using System;
 using System.Linq;
@@ -18,8 +19,7 @@ namespace MultiCreditCard.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        [AllowAnonymous]
+        [HttpPost, AllowAnonymous]
         public async Task<IActionResult> RegisterNewUser([FromBody]RegisterNewUserCommand command)
         {
             if (command == null)
@@ -42,8 +42,7 @@ namespace MultiCreditCard.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        [Route("credit-cards")]
+        [Authorize, Route("credit-cards")]
         public async Task<IActionResult> GetCreditCardsUser()
         {
             try

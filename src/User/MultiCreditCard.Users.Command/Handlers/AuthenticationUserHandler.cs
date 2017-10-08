@@ -7,6 +7,7 @@ using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
 using MultiCreditCard.Users.Domain.Contracts.Repositories;
 using MultiCreditCard.Users.Domain.Entities;
+using MultiCreditCard.Users.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -50,7 +51,7 @@ namespace MultiCreditCard.Users.Command.Handlers
 
         private void VerifyUser(AuthenticationUserCommand command, AuthenticationUserResponse response)
         {
-            _user = _userRepository.GetUserFromCredentials(command.Email, command.Password).Result;
+            _user = _userRepository.GetUserFromCredentials(command.Email, new Password(command.Password).Encoded).Result;
             if (string.IsNullOrEmpty(_user.UserId))
             {
                 response.AddError($"Usuário com o email {command.Email} não localizado.");
@@ -73,8 +74,10 @@ namespace MultiCreditCard.Users.Command.Handlers
             return new List<Claim>
             {
                 new Claim("access_token", user.UserId),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserId),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email)
+                ,new Claim(JwtRegisteredClaimNames.Sub, user.UserName)
             };
         }
 

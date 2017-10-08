@@ -1,5 +1,4 @@
-﻿using MultiCreditCard.Users.Domain.ValueObjects;
-using System;
+﻿using System;
 
 namespace MultiCreditCard.Users.Domain.Entities
 {
@@ -15,20 +14,27 @@ namespace MultiCreditCard.Users.Domain.Entities
             if (string.IsNullOrEmpty(userName))
                 throw new ArgumentException(nameof(userName));
 
-            UserId = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentException(nameof(email));
+
+            if (string.IsNullOrEmpty(password))
+                throw new ArgumentException(nameof(password));
+
+            if (documentNumber <= 0)
+                throw new ArgumentException(nameof(documentNumber));
+
             UserName = userName;
             DocumentNumber = documentNumber;
             Email = email;
             Password = password;
-            CreationDate = DateTime.Now;
         }
 
-        public string UserId { get; private set; }
+        public string UserId { get; private set; } = Guid.NewGuid().ToString();
         public string UserName { get; private set; }
         public decimal DocumentNumber { get; private set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public DateTime CreationDate { get; private set; }
+        public DateTime CreationDate { get; private set; } = DateTime.Now;
 
         public static User DefaultEntity() => new User();
     }

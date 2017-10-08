@@ -76,6 +76,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Shared", "S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiCreditCard.CreditCards.Infra.Data", "CreditCard\MultiCreditCard.CreditCards.Infra.Data\MultiCreditCard.CreditCards.Infra.Data.csproj", "{51F9EAA1-395A-4B09-B1AF-DD022BABB77D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{04567BD6-890F-49A9-A8F0-4AEAADCCFBB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiCreditCard.Domain.Common", "MultiCreditCard.Domain.Common\MultiCreditCard.Domain.Common.csproj", "{00C1AE56-6E45-4A79-ABEF-C85FE86E641E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -146,6 +150,10 @@ Global
 		{51F9EAA1-395A-4B09-B1AF-DD022BABB77D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51F9EAA1-395A-4B09-B1AF-DD022BABB77D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51F9EAA1-395A-4B09-B1AF-DD022BABB77D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00C1AE56-6E45-4A79-ABEF-C85FE86E641E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00C1AE56-6E45-4A79-ABEF-C85FE86E641E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00C1AE56-6E45-4A79-ABEF-C85FE86E641E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00C1AE56-6E45-4A79-ABEF-C85FE86E641E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,6 +187,8 @@ Global
 		{92F4D513-13F7-433A-ADFC-F929097FCF03} = {5717FB18-A7E7-4B1B-BE03-F2940EC5EF0B}
 		{B63EAC5E-49EF-466A-9F19-20B3A1BBCB57} = {4DB50A69-06BD-4F48-B0B4-813C2AB68E0D}
 		{51F9EAA1-395A-4B09-B1AF-DD022BABB77D} = {C450F03C-9A48-4922-A23A-5042C701D9EE}
+		{04567BD6-890F-49A9-A8F0-4AEAADCCFBB0} = {6C7FD89F-97CB-49F5-879F-1C1C72D55C7B}
+		{00C1AE56-6E45-4A79-ABEF-C85FE86E641E} = {7A9DB4ED-EAB0-4E50-8705-C173EC593389}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {983DF906-986C-4DC1-9980-19B95A82D260}
