@@ -16,7 +16,7 @@ namespace MultiCreditCard.Wallets.Domain.Test
             var user = GetUser();
 
             var vidaCreditCard = new CreditCard(user,CreditCardType.Visa, 4539012657749922, "MELISSA DAVIDSON", "01/18", 15, "669", 0);
-            var americanCreditCard = new CreditCard(user, CreditCardType.AmericanExpressa, 344241982621208, "MELISSA DAVIDSON", "05/08", 4, "949", 1250);
+            var americanCreditCard = new CreditCard(user, CreditCardType.AmericanExpress, 344241982621208, "MELISSA DAVIDSON", "05/08", 4, "949", 1250);
             var masterCreditCard = new CreditCard(user, CreditCardType.Visa, 4532692653021082, "MELISSA DAVIDSON", "10/19", 4, "647", 1250);
 
             var wallet = new Wallet(user);

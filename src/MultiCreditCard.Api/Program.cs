@@ -13,16 +13,6 @@ namespace MultiCreditCard.Api
 
         public static void Main(string[] args)
         {
-            var log4netConfig = new XmlDocument();
-            log4netConfig.Load(File.OpenRead("log4net.config"));
-
-            var repo = LogManager.CreateRepository(
-                Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-
-            XmlConfigurator.Configure(repo, log4netConfig["log4net"]);
-
-            log.Info("Multi Credit Cast is online");
-
             BuildWebHost(args).Run();
         }
 

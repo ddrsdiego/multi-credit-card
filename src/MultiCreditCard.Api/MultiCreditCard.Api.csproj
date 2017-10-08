@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiCreditCard.Infra.IoC\MultiCreditCard.Infra.IoC.csproj" />
+    <ProjectReference Include="..\Shared\MultiCreditCard.Shared\MultiCreditCard.Shared.csproj" />
     <ProjectReference Include="..\User\MultiCreditCard.Users.Command\MultiCreditCard.Users.Command.csproj" />
   </ItemGroup>
 

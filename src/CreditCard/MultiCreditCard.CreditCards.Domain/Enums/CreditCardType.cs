@@ -4,7 +4,7 @@
     {
         Visa = 1,
         Mastercard = 2,
-        AmericanExpressa = 3,
+        AmericanExpress = 3,
         Elo = 4
     }
 }

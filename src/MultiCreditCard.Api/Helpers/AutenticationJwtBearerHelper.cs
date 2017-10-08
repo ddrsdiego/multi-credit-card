@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -7,8 +8,10 @@ namespace MultiCreditCard.Api.Helpers
 {
     public static class AutenticationJwtBearerHelper
     {
-        public static void RegisterJwtBearer(this IServiceCollection services)
+        public static void AddJwtBearer(this IServiceCollection services, IConfiguration config)
         {
+            var authCongi = config.GetSection("AuthConfig");
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(jwtBearerOptions =>
             {
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters

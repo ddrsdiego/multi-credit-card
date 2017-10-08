@@ -44,10 +44,26 @@ namespace MultiCreditCard.Wallets.Domain.Services
 
         public void Buy(Wallet wallet)
         {
-            wallet.CreditCards.ToList().ForEach(creditCard =>
+            try
             {
-                _creditCardRepository.UpdateCreditCardLimit(creditCard);
-            });
+                if (wallet == null)
+                    throw new ArgumentNullException(nameof(wallet));
+
+                if (wallet.CreditCards == null || !wallet.CreditCards.Any())
+                    throw new ArgumentNullException(nameof(wallet.CreditCards));
+
+                _creditCardRepository.UpdateCreditCardLimit(wallet.CreditCards.ToList());
+
+                //wallet.CreditCards.ToList().ForEach(creditCard =>
+                //{
+                //    _creditCardRepository.UpdateCreditCardLimit(creditCard);
+                //});
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public async Task CreateWalletAsync(User user)

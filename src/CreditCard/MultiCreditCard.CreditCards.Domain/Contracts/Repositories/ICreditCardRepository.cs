@@ -1,4 +1,5 @@
 ﻿using MultiCreditCard.CreditCards.Domain.Entities;
+using System.Collections.Generic;
 
 namespace MultiCreditCard.CreditCards.Domain.Contracts.Repositories
 {
@@ -6,6 +7,12 @@ namespace MultiCreditCard.CreditCards.Domain.Contracts.Repositories
     {
         void Create(CreditCard creditCard);
 
+        void UpdateCreditCardLimit(List<CreditCard> creditCards);
+
         void UpdateCreditCardLimit(CreditCard creditCard);
+
+        IEnumerable<dynamic> GetCreditCardsUser(string userId);
+
+        IList<CreditCard> GetCreditCardByUserId(string userId);
     }
 }

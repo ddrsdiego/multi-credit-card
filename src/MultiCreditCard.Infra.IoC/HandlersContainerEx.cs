@@ -9,7 +9,8 @@ namespace MultiCreditCard.Infra.IoC
     {
         public static void RegisterHandler(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(AuthenticationUserHandler).Assembly,
+            services.AddMediatR(typeof(GetCreditCardsUserHandler).Assembly,
+                                typeof(AuthenticationUserHandler).Assembly,
                                 typeof(RequestUpdateUserCreditLimitHandler).Assembly,
                                 typeof(RequestCreditCardBuyHandler).Assembly, 
                                 typeof(RegisterNewUserHandler).Assembly,

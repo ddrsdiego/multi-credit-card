@@ -9,10 +9,12 @@
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="MediatR" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\MultiCreditCard.Application.Common\MultiCreditCard.Application.Common.csproj" />
+    <ProjectReference Include="..\..\Shared\MultiCreditCard.Shared\MultiCreditCard.Shared.csproj" />
     <ProjectReference Include="..\..\Wallet\MultiCreditCard.Wallets.Domain\MultiCreditCard.Wallets.Domain.csproj" />
     <ProjectReference Include="..\MultiCreditCard.Users.Domain\MultiCreditCard.Users.Domain.csproj" />
   </ItemGroup>

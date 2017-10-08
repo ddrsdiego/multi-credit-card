@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MultiCreditCard.Shared.Config;
 using MultiCreditCard.Users.Command.Commands;
 using MultiCreditCard.Users.Command.Reponse;
 using MultiCreditCard.Users.Domain.Contracts.Repositories;
@@ -20,9 +22,11 @@ namespace MultiCreditCard.Users.Command.Handlers
 
         private readonly ILogger _logger;
         private readonly IUserRepository _userRepository;
+        private readonly IOptions<AuthConfig> _config;
 
-        public AuthenticationUserHandler(IUserRepository userRepository, ILoggerFactory loggerFactory)
+        public AuthenticationUserHandler(IUserRepository userRepository, ILoggerFactory loggerFactory, IOptions<AuthConfig> config)
         {
+            _config = config;
             _userRepository = userRepository;
             _logger = loggerFactory.CreateLogger<AuthenticationUserHandler>();
         }
@@ -56,12 +60,11 @@ namespace MultiCreditCard.Users.Command.Handlers
 
         private async Task<JwtSecurityToken> GetJwtSecurityToken(User user)
         {
-            return new JwtSecurityToken(
-                issuer: "http://api.multicreditcard.com.br",
-                audience: "http://api.multicreditcard.com.br",
-                claims: GetTokenClaims(user),
-                expires: DateTime.UtcNow.AddMinutes(10),
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("fcebf5457e484be1ab50772e236ccd22fcb32d345e41459986cdb973d2d1a34e")), SecurityAlgorithms.HmacSha256)
+            return new JwtSecurityToken(issuer: _config.Value.Issuer,
+                                        audience: _config.Value.Audience,
+                                        claims: GetTokenClaims(user),
+                                        expires: DateTime.UtcNow.AddMinutes(15),
+                                        signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.Value.ContentSecret)), SecurityAlgorithms.HmacSha256)
             );
         }
 

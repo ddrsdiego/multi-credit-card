@@ -32,12 +32,37 @@
                                                     )
                                                     END";
 
+
         public const string @UpdateCreditCarLimit = @"
+                                                        DECLARE @filtroXml XML
+
+                                                        SET @filtroXml = @xml
+
+                                                        DECLARE @CreditCards TABLE(
+	                                                        UserId				VARCHAR(36)
+	                                                        ,CreditCardNumber	DECIMAL(18,0)
+	                                                        ,CreditCardType		INT
+	                                                        ,CreditLimit		DECIMAL(18,2)
+                                                        )
+
+                                                        INSERT INTO @CreditCards
+                                                        SELECT
+	                                                        CreditCards.col.value('@UserId'  ,'varchar(36)')                 [UserId]
+	                                                        ,CreditCards.col.value('@CreditCardNumber'  , 'decimal(18,0)')   [CreditCardNumber]
+	                                                        ,CreditCards.col.value('@CreditCardType'  , 'int')               [CreditCardType]
+	                                                        ,CreditCards.col.value('@CreditLimit'  , 'decimal(18,2)')        [CreditLimit]
+                                                        FROM @filtroXml.nodes('/creditCards/CreditCard') AS CreditCards(col)
+
                                                         UPDATE CREDITCARDS SET
-	                                                        CreditLimit = @creditLimit
-                                                        WHERE
-                                                            ( USERID = @userId )
-	                                                        AND ( CREDITCARDNUMBER = @creditcardnumber )
-	                                                        AND ( CREDITCARDTYPE = @creditcardtype )";
+	                                                        CREDITCARDS.CreditLimit = CreditCardsTmp.CreditLimit
+                                                        FROM CREDITCARDS
+	                                                        INNER JOIN @CreditCards CreditCardsTmp
+		                                                        ON CreditCardsTmp.UserId = CREDITCARDS.UserId
+		                                                        AND CreditCardsTmp.CreditCardNumber = CREDITCARDS.CreditCardNumber
+		                                                        AND CreditCardsTmp.CreditCardType = CREDITCARDS.CreditCardType";
+
+
+        public const string GetCreditCardsUser = @"SELECT * FROM VW_CREDITCARDS_USER WHERE USERID = @userId";
+
     }
 }

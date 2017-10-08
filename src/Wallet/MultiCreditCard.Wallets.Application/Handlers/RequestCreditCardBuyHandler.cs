@@ -67,6 +67,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             try
             {
                 _user = _userRepository.GetUserByUserId(command.UserId).Result;
+
                 if (string.IsNullOrEmpty(_user.UserId))
                     response.AddError($"Usuário não localizado encontrado");
             }
@@ -81,6 +82,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
             try
             {
                 _wallet = _walletService.GetWalletByUserId(_user.UserId).Result;
+
                 if (_wallet == null)
                     response.AddError($"Não há nenhuma carteira para o cliente.");
             }

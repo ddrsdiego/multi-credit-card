@@ -1,6 +1,3 @@
-USE [MultCreditCard]
-GO
-
 /****** Object:  Table [dbo].[USERS]    Script Date: 05/10/2017 06:56:39 ******/
 SET ANSI_NULLS ON
 GO
@@ -12,16 +9,16 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[USERS](
-	[UserId] [varchar](36) NOT NULL,
-	[UserName] [varchar](60) NOT NULL,
-	[DocumentNumber] [numeric](18, 0) NOT NULL,
-	[Email] [varchar](30) NOT NULL,
-	[Password] [varchar](10) NOT NULL,
-	[CreationDate] [datetime] NOT NULL,
-	CONSTRAINT [PK_USERS] PRIMARY KEY CLUSTERED 
-	(
-		[UserId] ASC
-	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	[UserId] 			[varchar](36) NOT NULL,
+	[UserName] 			[varchar](60) NOT NULL,
+	[DocumentNumber] 	[numeric](18, 0) NOT NULL,
+	[Email] 			[varchar](50) NOT NULL,
+	[Password] 			[varchar](10) NOT NULL,
+	[CreationDate] 		[datetime] NOT NULL,
+ CONSTRAINT [PK_USERS] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 GO
@@ -29,7 +26,17 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-/****** Object:  Table [dbo].[WALLETS]    Script Date: 05/10/2017 06:57:54 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_USERS_EMAIL] ON [dbo].[USERS]
+(
+	[Email] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+
+
+
+/****** Object:  Table [dbo].[WALLETS]    Script Date: 07/10/2017 19:49:20 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -42,8 +49,6 @@ GO
 CREATE TABLE [dbo].[WALLETS](
 	[WalletId] [varchar](36) NOT NULL,
 	[UserId] [varchar](36) NOT NULL,
-	[AvailableCredit] [decimal](18, 2) NOT NULL,
-	[MaximumCreditLimit] [decimal](18, 2) NOT NULL,
 	[UserCreditLimit] [decimal](18, 2) NOT NULL,
 	[CreationDate] [datetime] NOT NULL,
 	[UpdateDate] [datetime] NULL,
@@ -58,14 +63,25 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[WALLETS]  WITH CHECK ADD  CONSTRAINT [FK_WALLETS_USERS] FOREIGN KEY([UserId])
-REFERENCES [dbo].[USERS] ([UserId])
+ALTER TABLE [dbo].[WALLETS]  WITH CHECK ADD  CONSTRAINT [FK_WALLETS_USERS] FOREIGN KEY([UserId]) REFERENCES [dbo].[USERS] ([UserId])
 GO
 
 ALTER TABLE [dbo].[WALLETS] CHECK CONSTRAINT [FK_WALLETS_USERS]
 GO
 
-/****** Object:  Table [dbo].[CREDITCARDS]    Script Date: 05/10/2017 06:58:11 ******/
+/****** Object:  Index [IX_WALLETS_USERID]    Script Date: 07/10/2017 19:49:31 ******/
+CREATE UNIQUE NONCLUSTERED INDEX [IX_WALLETS_USERID] ON [dbo].[WALLETS]
+(
+	[UserId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+
+
+
+
+
+/****** Object:  Table [dbo].[CREDITCARDS]    Script Date: 07/10/2017 19:52:59 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -76,17 +92,22 @@ SET ANSI_PADDING ON
 GO
 
 CREATE TABLE [dbo].[CREDITCARDS](
-	[CreditCardNumber] [decimal](18, 0) NOT NULL,
-	[CreditCardType] [int] NOT NULL,
-	[PrintedName] [varchar](50) NOT NULL,
-	[PayDay] [int] NOT NULL,
-	[MaturityDate] [datetime] NULL,
-	[ExpirationDate] [varchar](5) NOT NULL,
-	[CreditLimit] [decimal](18, 2) NOT NULL,
-	[CVV] [varchar](5) NOT NULL,
+	[CreditCardNumber]	[decimal](18, 0) NOT NULL,
+	[CreditCardType]	[int] NOT NULL,
+	[UserId]			[varchar](36) NOT NULL,
+	[PrintedName]		[varchar](50) NOT NULL,
+	[PayDay]			[int] NOT NULL,
+	[MaturityDate]		[datetime] NULL,
+	[ExpirationDate]	[varchar](5) NOT NULL,
+	[CreditLimit]		[decimal](18, 2) NOT NULL,
+	[CVV]				[varchar](5) NOT NULL,
+	[CreateDate]		[datetime] NOT NULL,
+	[Enable]			[bit] NULL,
  CONSTRAINT [PK_CREDITCARDS_1] PRIMARY KEY CLUSTERED 
 (
-	[CreditCardNumber] ASC
+	[CreditCardNumber] ASC,
+	[UserId] ASC,
+	[CreditCardType] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
@@ -95,15 +116,11 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-/****** Object:  Table [dbo].[WALLTES_CREDITCARDS]    Script Date: 05/10/2017 06:58:28 ******/
-SET ANSI_NULLS ON
-GO
 
-SET QUOTED_IDENTIFIER ON
-GO
 
-SET ANSI_PADDING ON
-GO
+
+
+/****** Object:  Table [dbo].[WALLTES_CREDITCARDS]    Script Date: 07/10/2017 19:54:11 ******/
 
 CREATE TABLE [dbo].[WALLTES_CREDITCARDS](
 	[WalletId] [varchar](36) NOT NULL,
@@ -120,16 +137,35 @@ GO
 SET ANSI_PADDING OFF
 GO
 
-ALTER TABLE [dbo].[WALLTES_CREDITCARDS]  WITH CHECK ADD  CONSTRAINT [FK_WALLTES_CREDITCARDS_CREDITCARDS] FOREIGN KEY([CreditCardNumber])
-REFERENCES [dbo].[CREDITCARDS] ([CreditCardNumber])
-GO
-
-ALTER TABLE [dbo].[WALLTES_CREDITCARDS] CHECK CONSTRAINT [FK_WALLTES_CREDITCARDS_CREDITCARDS]
-GO
-
-ALTER TABLE [dbo].[WALLTES_CREDITCARDS]  WITH CHECK ADD  CONSTRAINT [FK_WALLTES_CREDITCARDS_WALLETS] FOREIGN KEY([WalletId])
-REFERENCES [dbo].[WALLETS] ([WalletId])
+ALTER TABLE [dbo].[WALLTES_CREDITCARDS]  WITH CHECK ADD  CONSTRAINT [FK_WALLTES_CREDITCARDS_WALLETS] FOREIGN KEY([WalletId]) REFERENCES [dbo].[WALLETS] ([WalletId])
 GO
 
 ALTER TABLE [dbo].[WALLTES_CREDITCARDS] CHECK CONSTRAINT [FK_WALLTES_CREDITCARDS_WALLETS]
+GO
+
+
+DROP VIEW VW_CREDITCARDS_USER
+GO
+
+CREATE VIEW VW_CREDITCARDS_USER
+AS
+(
+	SELECT
+		USERS.UserId
+		,CREDITCARDS.CreditCardNumber
+		,CREDITCARDS.CreditCardType
+		,CREDITCARDS.CreditLimit
+		,CREDITCARDS.PayDay
+		,CREDITCARDS.ExpirationDate
+	FROM USERS WITH(NOLOCK)
+		INNER JOIN WALLETS
+			ON WALLETS.UserId = USERS.UserId
+		INNER JOIN WALLTES_CREDITCARDS
+			ON WALLTES_CREDITCARDS.WalletId = WALLETS.WalletId
+		INNER JOIN CREDITCARDS
+			ON CREDITCARDS.CreditCardNumber = WALLTES_CREDITCARDS.CreditCardNumber
+			AND CREDITCARDS.UserId = USERS.UserId
+	WHERE
+		( CREDITCARDS.Enable = 1 )
+)
 GO
