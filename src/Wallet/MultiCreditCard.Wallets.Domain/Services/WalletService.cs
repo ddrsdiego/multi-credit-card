@@ -53,11 +53,6 @@ namespace MultiCreditCard.Wallets.Domain.Services
                     throw new ArgumentNullException(nameof(wallet.CreditCards));
 
                 _creditCardRepository.UpdateCreditCardLimit(wallet.CreditCards.ToList());
-
-                //wallet.CreditCards.ToList().ForEach(creditCard =>
-                //{
-                //    _creditCardRepository.UpdateCreditCardLimit(creditCard);
-                //});
             }
             catch (Exception)
             {

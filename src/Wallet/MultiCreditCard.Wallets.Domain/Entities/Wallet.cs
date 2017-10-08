@@ -12,6 +12,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
         protected Wallet()
         {
+
         }
 
         public Wallet(User user)
@@ -20,7 +21,6 @@ namespace MultiCreditCard.Wallets.Domain.Entities
 
             User = user;
             WalletId = Guid.NewGuid().ToString();
-            CreationDate = DateTime.Now;
         }
 
         public string WalletId { get; private set; }
@@ -45,7 +45,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
             set { _creditCards = new List<CreditCard>(value); }
         }
 
-        public DateTime CreationDate { get; private set; }
+        public DateTime CreationDate { get; private set; } = DateTime.Now;
 
         public DateTime UpdateDate { get; set; }
 

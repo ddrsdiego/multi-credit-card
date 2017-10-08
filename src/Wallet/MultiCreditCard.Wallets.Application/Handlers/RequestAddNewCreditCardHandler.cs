@@ -16,8 +16,8 @@ namespace MultiCreditCard.Wallets.Application.Handlers
 {
     public class RequestAddNewCreditCardHandler : IAsyncRequestHandler<RequestAddNewCreditCardCommand, RequestAddNewCreditCardResponse>
     {
-        private User _user;
-        private Wallet _wallet;
+        private User _user = User.DefaultEntity();
+        private Wallet _wallet = Wallet.DefaultEntity();
 
         private readonly IWalletService _walletService;
         private readonly IUserRepository _userRepository;
@@ -70,6 +70,7 @@ namespace MultiCreditCard.Wallets.Application.Handlers
         private void VerifyUser(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
             _user = _userRepository.GetUserByUserId(command.UserId).Result;
+
             if (string.IsNullOrEmpty(_user.UserId))
                 response.AddError($"Usuário não localizado encontrado");
         }
@@ -77,7 +78,8 @@ namespace MultiCreditCard.Wallets.Application.Handlers
         private void VerifyHasWallet(RequestAddNewCreditCardCommand command, RequestAddNewCreditCardResponse response)
         {
             _wallet = _walletRepository.GetWalletByUserId(_user.UserId).Result;
-            if (_wallet == null)
+
+            if (string.IsNullOrEmpty(_wallet.WalletId))
                 response.AddError($"Não há nenhuma carteira para o cliente.");
         }
 

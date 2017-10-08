@@ -13,6 +13,9 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
 
         public CreditCard(User user, CreditCardType creditCardType, decimal creditCardNumber, string printedName, string expirationDate, int payDay, string cvv, decimal creditLimit)
         {
+            if (creditLimit <= 0)
+                throw new ArgumentException(nameof(creditLimit));
+
             User = user;
             CreditCardType = creditCardType;
             CreditCardNumber = creditCardNumber;

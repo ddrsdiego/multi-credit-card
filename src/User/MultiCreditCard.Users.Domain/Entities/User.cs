@@ -23,13 +23,14 @@ namespace MultiCreditCard.Users.Domain.Entities
             if (documentNumber <= 0)
                 throw new ArgumentException(nameof(documentNumber));
 
+            UserId = Guid.NewGuid().ToString();
             UserName = userName;
             DocumentNumber = documentNumber;
             Email = email;
             Password = password;
         }
 
-        public string UserId { get; private set; } = Guid.NewGuid().ToString();
+        public string UserId { get; private set; }
         public string UserName { get; private set; }
         public decimal DocumentNumber { get; private set; }
         public string Email { get; set; }
