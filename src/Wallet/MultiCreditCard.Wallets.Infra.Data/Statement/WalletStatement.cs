@@ -17,7 +17,7 @@
                                             )";
 
         public const string GetUserByUserId = @"SELECT * FROM USERS WITH(NOLOCK) WHERE USERID = @userId;";
-        //public const string GetWalletByUserId = @"SELECT * FROM WALLETS WITH(NOLOCK) WHERE USERID = @userId;";
+
         public const string GetCreditCardByUserId = @"SELECT * FROM CREDITCARDS WITH(NOLOCK) WHERE USERID = @userId AND ENABLE = 1;";
 
         public const string GetWalletByUserId = @"
@@ -28,15 +28,15 @@
         public const string UpdateUserCreditLimit = @"UPDATE WALLETS SET UserCreditLimit = @UserCreditLimit WHERE WalletId = @WalletId";
 
         public const string AddNewCreditCart = @"
-                                                    IF NOT EXISTS(SELECT 1 FROM WALLTES_CREDITCARDS WHERE WalletId = @walletId AND CreditCardNumber = @creditCardNumber)
+                                                    IF NOT EXISTS(SELECT 1 FROM WALLTES_CREDITCARDS WHERE ( WalletId = @walletId ) AND ( CreditCardId = @creditCardId ))
                                                     BEGIN
                                                         INSERT INTO WALLTES_CREDITCARDS(
 	                                                        WalletId
-	                                                        ,CreditCardNumber
+	                                                        ,CreditCardId
                                                         )
                                                         VALUES(
 	                                                        @walletId
-	                                                        ,@creditCardNumber
+	                                                        ,@creditCardId
                                                         )
                                                     END";
 

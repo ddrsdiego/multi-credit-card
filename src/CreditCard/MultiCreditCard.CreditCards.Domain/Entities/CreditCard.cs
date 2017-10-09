@@ -16,6 +16,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
             if (creditLimit <= 0)
                 throw new ArgumentException(nameof(creditLimit));
 
+            CreditCardId = Guid.NewGuid().ToString();
             User = user;
             CreditCardType = creditCardType;
             CreditCardNumber = creditCardNumber;
@@ -30,6 +31,7 @@ namespace MultiCreditCard.CreditCards.Domain.Entities
 
         public static CreditCard DefaultEntity() => new CreditCard();
 
+        public string CreditCardId { get; private set; }
         public User User { get; set; }
         public decimal CreditCardNumber { get; private set; }
         public string PrintedName { get; private set; }

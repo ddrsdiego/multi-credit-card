@@ -32,6 +32,7 @@ namespace MultiCreditCard.CreditCards.Infra.Data.Repository
                 {
                     conn.Execute(CreditCardStatements.CreateNewCreditCard, new
                     {
+                        creditCardId = creditCard.CreditCardId,
                         userId = creditCard.User.UserId,
                         creditCardNumber = creditCard.CreditCardNumber,
                         creditCardType = (int)creditCard.CreditCardType,
@@ -99,18 +100,11 @@ namespace MultiCreditCard.CreditCards.Infra.Data.Repository
         {
             try
             {
-
-                var filtroXml = new XElement(nameof(creditCards),
-                        from creditCard in creditCards
-                        select new XElement(nameof(CreditCard),
-                            new XAttribute(nameof(creditCard.User.UserId), creditCard.User.UserId),
-                            new XAttribute(nameof(creditCard.CreditCardNumber), creditCard.CreditCardNumber),
-                            new XAttribute(nameof(creditCard.CreditCardType), (int)creditCard.CreditCardType),
-                            new XAttribute(nameof(creditCard.CreditLimit), creditCard.CreditLimit)));
+                var filtroXml = GetUpdateCreditCardLimitXml(creditCards);
 
                 using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
                 {
-                    await conn.ExecuteAsync(CreditCardStatements.CreateNewCreditCard, new { xml = filtroXml.ToString() });
+                    await conn.ExecuteAsync(CreditCardStatements.UpdateCreditCardLimit, new { xml = filtroXml.ToString() });
                 }
             }
             catch (Exception ex)
@@ -122,28 +116,15 @@ namespace MultiCreditCard.CreditCards.Infra.Data.Repository
             }
         }
 
-        public async void UpdateCreditCardLimit(CreditCard creditCard)
+        private static XElement GetUpdateCreditCardLimitXml(List<CreditCard> creditCards)
         {
-            try
-            {
-                using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
-                {
-                    await conn.ExecuteAsync(CreditCardStatements.UpdateCreditCarLimit, new
-                    {
-                        userId = creditCard.User.UserId,
-                        creditcardnumber = creditCard.CreditCardNumber,
-                        creditcardtype = (int)creditCard.CreditCardType,
-                        creditLimit = creditCard.CreditLimit
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                var msgError = $"Erro ao atualizar o limite do cartão de crédito {creditCard.CreditCardType} {creditCard.CreditCardNumber} {ex.Message}";
+            var filtroXml = new XElement(nameof(creditCards),
+                    from creditCard in creditCards
+                    select new XElement(nameof(CreditCard),
+                        new XAttribute(nameof(creditCard.CreditCardId), creditCard.CreditCardId),
+                        new XAttribute(nameof(creditCard.CreditLimit), creditCard.CreditLimit)));
 
-                _logger.LogError(ex, msgError);
-                throw new InvalidOperationException(msgError);
-            }
+            return filtroXml;
         }
     }
 }

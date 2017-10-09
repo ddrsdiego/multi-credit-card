@@ -83,6 +83,9 @@ namespace MultiCreditCard.Users.Command.Handlers
                 _wallet = _walletRepository.GetWalletByUserId(_user.UserId).Result;
                 if (_wallet == null)
                     response.AddError($"Não há nenhuma carteira para o cliente.");
+
+                if (_wallet.CreditCards == null || !_wallet.CreditCards.Any())
+                    response.AddError($"É necessário que haja pelo menos um cartão de crédito para autalizar o limite da carteira.");
             }
             catch (Exception ex)
             {

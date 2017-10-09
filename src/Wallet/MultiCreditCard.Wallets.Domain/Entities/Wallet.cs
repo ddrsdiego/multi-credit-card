@@ -74,7 +74,7 @@ namespace MultiCreditCard.Wallets.Domain.Entities
         public void UpdateUserCreditLimit(decimal newUserCreditLimit)
         {
             if (newUserCreditLimit > MaximumCreditLimit)
-                throw new InvalidOperationException($"Cartão de Crédito {newUserCreditLimit} já removido da carteira.");
+                throw new InvalidOperationException($"O limite não deve ser maior que a soma dos limites dos cartões.");
 
             UpdateDate = DateTime.Now;
             UserCreditLimit = newUserCreditLimit;

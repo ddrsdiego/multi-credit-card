@@ -25,7 +25,7 @@ namespace MultiCreditCard.Wallets.Infra.Data.Repository
         {
             using (SqlConnection conn = new SqlConnection(_config.GetConnectionString("MultCreditCard")))
             {
-                conn.Execute(WalletStatement.AddNewCreditCart, new { walletId = wallet.WalletId, creditCardNumber = creditCard.CreditCardNumber });
+                conn.Execute(WalletStatement.AddNewCreditCart, new { walletId = wallet.WalletId, CreditCardId = creditCard.CreditCardId });
 
                 var userCreditLimit = wallet.CreditCards.Sum(x => x.CreditLimit);
                 conn.Execute("UPDATE WALLETS SET UserCreditLimit = @userCreditLimit, UpdateDate = GETDATE() where WalletId = @WalletId", new { userCreditLimit = userCreditLimit, walletId = wallet.WalletId });
